@@ -1,0 +1,1127 @@
+/* CSS Notes: CSS are inspired and ideas largely from W3S and codepen.
+Ciatation:
+Contact form:
+https://codepen.io/dvtfskip-the-sans/pen/bGOYEPO
+converter form:
+https://codepen.io/jacobbanner/pen/oxeoqp
+all_rules and all_guns layout are inspired from https://www.w3schools.com/w3css/w3css_web_tmp_band.asp#gsc.tab=0
+Hover effects for nav bar: https://codepen.io/maheshambure21/pen/QwXaRw
+Others CSS are written by myself. */
+/* NAVIGATION */
+/* General styles for the navigation container */
+.nav {
+    width: 80%; 
+    margin: 0 auto; 
+    padding: 1px 0; 
+  }
+  
+  /* Styles for unordered lists within the navigation */
+  .nav ul {
+    font-family: 'Ubuntu', sans-serif; 
+    font-size: 15px; 
+    list-style: none; 
+    text-align: center;
+  }
+  
+  /* Styles for list items within the navigation, display inline-flex makes it a horizontal navigation bar */
+  .nav ul li {
+    display: inline-flex;
+  }
+  
+  /* Styles for anchor tags within navigation list items */
+  .nav ul li a {
+    display: block; 
+    padding: 15px; 
+    text-decoration: none;
+    color: #fff; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    margin: 0 10px; 
+  }
+  
+  /* Transition effect for anchor tags and their pseudo-elements in the navigation */
+  .nav ul li a,
+  .nav ul li a:after,
+  .nav ul li a:before {
+    transition: all 500ms; /* Smooth transition effect for all items in navbar */
+  }
+  
+  /* Change color to red on hover over navigation links */
+  .nav ul li a:hover {
+    color: red;
+  }
+  
+  /* Create a "stroke" effect (underline) for navigation links */
+  .nav ul li a,
+  .nav.fill ul li a {
+    position: relative; /* Establish a stacking context for pseudo-elements */
+  }
+  
+  /* Hidden underline for navigation links, shown on hover */
+  .nav ul li a:after,
+  .nav.fill ul li a:after {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    margin: auto; 
+    width: 0%; /* Initially set to 0 width */
+    content: '.';
+    color: transparent; /* Make the content color transparent */
+    background: #aaa; /* Set the background color for the underline */
+    height: 1px;
+  }
+  
+  /* Show the underline on hover */
+  .nav ul li a:hover:after {
+    width: 100%; /* Expand the underline to full width */
+  }
+  
+  /* Transition and initial styles for navigation links with "fill" class */
+  .nav.fill ul li a {
+    transition: all 500ms;
+  }
+  
+  /* Hide the pseudo-element underline for navigation links with "fill" class */
+  .nav.fill ul li a:after {
+    text-align: left;
+    content: '.';
+    margin: 0;
+    opacity: 0; /* Completely transparent */
+  }
+  
+  /* Hover styles for navigation links with "fill" class */
+  .nav.fill ul li a:hover {
+    color: #fff;
+    z-index: 1;
+  }
+  
+  /* Styling effects upon hovering over navigation links with "fill" class */
+  .nav.fill ul li a:hover:after {
+    z-index: -10; /* Place the underline below other elements */
+    animation: fill 1s forwards; /* Animation named "fill" which runs for 1 second and retains its end state */
+    /* Prefixes for older browsers */
+    -webkit-animation: fill 1s forwards;
+    -moz-animation: fill 1s forwards;
+    opacity: 1;
+  }
+  
+  /* Similar styles are then provided for elements with class "logo" and "logo-text". 
+  These are for branding or website logo elements. */
+  .margin0 {
+    margin:0;
+  }
+  
+  .homebgimg {
+    width:100%;
+  }
+  
+  .logo {
+    display:flex;
+    align-items: center;
+    padding:0px;
+  }
+  
+  .logo img {
+    width:70px;
+    height:auto;
+  }
+  
+  .logo-text {
+    font-family: 'Ubuntu', sans-serif;;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10px;
+    text-align: center;
+  }
+  
+  .logo-text li{
+    display: inline-flex;
+  }
+  
+  .logo-text li a{
+    text-decoration: none;
+    color: white;
+  }
+  
+  .logo-text li a,
+  .logo-text li a:after,
+  .logo-text li a:before {
+    transition: all .5s;
+  }
+  
+  .logo-text li a:hover {
+    color: red;
+  }
+  
+  /* stroke */
+  .logo-text li a,
+  .logo-text.fill li a {
+    position: relative;
+  }
+  
+  .logo-text li a:after,
+  .logo-text.fill ul li a:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0%;
+    content: '.';
+    color: transparent;
+    background: #aaa;
+    height: 1px;
+  }
+  
+  .logo-text li a:hover:after {
+    width: 100%;
+  }
+  
+  .logo-text.fill ul li a {
+    transition: all 2s;
+  }
+  
+  .logo-text.fill ul li a:after {
+    text-align: left;
+    content: '.';
+    margin: 0;
+    opacity: 0;
+  }
+  
+  .logo-text.fill ul li a:hover {
+    color: #fff;
+    z-index: 1;
+  }
+  
+  .logo-text ul li a:hover:after {
+    z-index: -10;
+    animation: fill 1s forwards;
+    -webkit-animation: fill 1s forwards;
+    -moz-animation: fill 1s forwards;
+    opacity: 1;
+  }
+  
+  /* Fixed position header with a background and full width */
+  .header {
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 0px;
+    position: fixed;
+    align-items: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .flash-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 9999;
+  }
+  
+  .flash-box {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  #footer {
+    padding: 24px 16px;
+    text-align: center;
+    background-color: black;
+    margin-top:0px;
+    position:fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  #footer .socical-list {
+    font-size: 24px;
+  }
+  
+  #footer .socical-list a {
+    color: white;
+    opacity: 1;
+    text-decoration: none;
+    padding-bottom: 3px;
+    padding-top: 3px
+  }
+  
+  #footer .socical-list li{
+    display: inline-flex;
+  }
+  
+  #footer .footer-text{
+    display: inline-flex;
+    color: white;
+    padding-top:0px;
+    padding-bottom: 5px;
+  }
+  
+  #footer .socical-list a:hover,#footer .copyright a:hover{
+    opacity: 0.3;
+  }
+  
+  #footer .footer-copyright li{
+    padding: 5px 1px;
+    text-align: center;
+    display: inline-flex;
+    color: white;
+  }
+  
+  .allmessage-wrapper {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+  
+  .allmsgh1  {
+    background-color: black;
+    color:white;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+  .allmsg {
+    padding-top: 80px;
+    margin: 0;
+  }
+  
+  .allmsg ul li{
+    list-style-type: none;
+    display: block;
+  }
+  
+  .allmsg ul li a {
+    display: inline-block;
+    padding: 0px;
+    text-decoration: none;
+    color: black;
+    font-weight: 800;
+    margin: 0 10px;
+  }
+  
+  .allmsg {
+    padding-top: 80px;
+  }
+  
+  .allmsg h2{
+    margin-left: 10px;
+  }
+  
+  .allmsg ul li{
+    list-style-type: none;
+    display: block;
+  }
+  
+  .allmsg ul li a {
+    display: inline-block;
+    padding: 0px;
+    text-decoration: none;
+    color: black;
+    font-weight: 800;
+    margin: 0 10px;
+  }
+  
+  /* Importing the Lato font family from Google Fonts with different font weights */
+  @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+  #contact-form {
+    position:relative;
+    width: 500px;
+    margin: 50px auto 100px auto;
+  }
+  
+  /* Styling for input and textarea placeholders using https://autoprefixer.github.io/ */
+  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  input::-ms-input-placeholder, textarea::-ms-input-placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: #aca49c;
+    font-size: 0.875em;
+  }
+  
+  /* Styling for input and textarea placeholders when focused using https://autoprefixer.github.io/ */
+  input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+    color: #bbb5af;
+  }
+  
+  input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+    color: #bbb5af;
+  }
+  
+  input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder {
+    color: #bbb5af;
+  }
+  
+  input:focus::-ms-input-placeholder, textarea:focus::-ms-input-placeholder {
+    color: #bbb5af;
+  }
+  
+  input:focus::placeholder,
+  textarea:focus::placeholder {
+    color: #bbb5af;
+  }
+  
+  /* Styling for placeholders on hover using https://autoprefixer.github.io/ */
+  input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover::-moz-placeholder, textarea:hover::-moz-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover:-ms-input-placeholder, textarea:hover:-ms-input-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover::-ms-input-placeholder, textarea:hover::-ms-input-placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover::placeholder,
+  textarea:hover::placeholder {
+    color: #e2dedb;
+    font-size: 0.875em;
+  }
+  
+  input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
+    color: #cbc6c1;
+  }
+  
+  input:hover:focus::-moz-placeholder, textarea:hover:focus::-moz-placeholder {
+    color: #cbc6c1;
+  }
+  
+  input:hover:focus:-ms-input-placeholder, textarea:hover:focus:-ms-input-placeholder {
+    color: #cbc6c1;
+  }
+  
+  input:hover:focus::-ms-input-placeholder, textarea:hover:focus::-ms-input-placeholder {
+    color: #cbc6c1;
+  }
+  
+  input:hover:focus::placeholder,
+  textarea:hover:focus::placeholder {
+    color: #cbc6c1;
+  }
+  
+  /* Styling for Internet Explorer/Edge placeholders on hover using https://autoprefixer.github.io/ */
+  input:hover:focus::-ms-placeholder,
+  textarea:hover:focus::-ms-placeholder {
+    color: #cbc6c1;
+  }
+  
+  /* Base styling for the entire contact page */
+  .contact-body {
+    padding-top: 100px;
+    background-image: url('/static/images/ctbg.jpg');
+    background-size: cover;  /* Ensures the image covers the entire element */
+    background-position: center;  /* Centers the image */
+    background-repeat: no-repeat;  /* Prevents the image from repeating */
+    margin: 0;
+    font-family: 'Ubuntu', sans-serif; /* Font family for the entire page */
+    color: white; /* Text color */
+  }
+  
+  /* Styling for the header section */
+  header {
+    position: relative;
+    margin: 100px 0 25px 0;
+    font-size: 2.3em; /* Font size */
+    text-align: center;
+    letter-spacing: 7px; /* Letter spacing */
+  }
+  
+  /* Styling for the form section */
+  .ctcform {
+    position: relative;
+    width: 470px;
+    margin: 50px auto 100px auto;
+  }
+  
+  /* Styling for contact input fields */
+  .contact-input {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.875em;
+    width: 470px; 
+    height: 50px; 
+    padding: 0px 15px 0px 15px; 
+    background: transparent; 
+    outline: none;
+    color: white; 
+    border: solid 1px #b3aca7;
+    border-bottom: none; /* Remove bottom border */
+    transition: all 0.3s ease-in-out; /* Transition effect */
+  }
+  
+  /* Styling for input fields on hover */
+  .contact-input:hover {
+    background: #747272; /* Background color on hover */
+    color:#e2dedb; /* Text color on hover */
+  }
+  
+  /* Styling for textarea fields */
+  .textarea {
+    width: 470px;
+    max-width: 470px;
+    padding: 15px;
+    background: transparent;
+    outline: none;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.875em;
+    border: solid 1px #b3aca7;
+    transition: all 0.3s ease-in-out;
+    text-align: start;
+    font-size: 20;
+    overflow-y: hidden;
+    resize: none; /*hide scrollbar*/
+  }
+  
+  /* Styling for textarea fields on hover */
+  textarea:hover {
+    background: #b3aca7;
+    color: #e2dedb;
+  }
+  
+  /* Styling for the submit button */
+  #contact-submit-button {
+    width: 501.9px;
+    padding: 0;
+    margin: 0px 0px 0px 0px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.875em;
+    color: #b3aca7;
+    outline: none;
+    cursor: pointer;
+    border: solid 1px #b3aca7;
+  }
+  
+  /* Styling for the submit button on hover */
+  #contact-submit-button:hover {
+    color: #e2dedb;
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
+  .btn {
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
+    padding: 11px 16px;
+    border: none;
+    display: inline-block;
+    margin-top: 18px;
+    -webkit-appearance: none;
+  }
+  
+  .pull-right {
+    float: right !important;
+  }
+  
+  .btn:hover {
+    color: #000;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  .text-white {
+    color: #fff !important;
+  }
+  .text-center {
+    text-align: center !important;
+  }
+  
+  .mt-8 {
+    margin-top: 8px !important;
+  }
+  
+  .mt-16 {
+    margin-top: 16px !important;
+  }
+  .mt-32 {
+    margin-top: 32px !important;
+  }
+  .row {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  
+  .row::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  
+  .col {
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .col-full {
+    width: 100%;
+  }
+  
+  .col-half {
+    width: 45%;
+  }
+  
+  .col-third {
+    width: 24.1%;
+  }
+  
+  
+  #content .content-section {
+    width: 100%;
+    padding: 64px 0 112px;
+    margin: auto;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  #content .section-heading {
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  
+  #content .section-subheading {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 25px;
+    font-style: italic;
+    opacity: 0.6;
+  }
+  
+  #content .about-text {
+    text-align: justify;
+    font-size: 15px;
+    margin-top: 25px;
+    line-height: 1.4;
+  }
+  
+  #content .member-list {
+    margin-top: 32px;
+    overflow: hidden;
+  }
+  
+  #content .member-name {
+    font-size: 15px;
+  }
+  
+  #content .member-img {
+    margin-top: 15px;
+    width: 154px;
+    border-radius: 4px;
+  }
+  
+  /* all_rules section. This got idea and template from the w3s the band website. */
+  
+  
+  .places-list {
+    margin-top: 16px;
+    padding-bottom: 48px;
+  }
+  
+  .place-img {
+    width: 100%;
+    max-width: 1200px;
+    display: block;
+  }
+  
+  .place-img:hover {
+    opacity: 0.6;
+  }
+  
+  .rule-content {
+    padding: 16px;
+    font-size: 15px;
+    background-color: #fff;
+  }
+  
+  .rule-name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .rule-date {
+    opacity: 0.6;
+    margin-top: 15px;
+  }
+  
+  .rule-basicdesc {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 340px;
+    margin-top: 15px;
+    line-height: 1.4;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+    display: none;
+  }
+  
+  .modal.open {
+    display: flex;
+  }
+  
+  .modal-container {
+    background: #fff;
+    width: 900px;
+    max-width: calc(100% - 64px);
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.6s;
+  }
+  
+  .modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+    opacity: 0.9;
+  }
+  
+  .modal-close:hover {
+    background-color: #ccc;
+  }
+  
+  .modal-header {
+    background-color: #009688;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #fff;
+    letter-spacing: 14px;
+    font-weight: 100;
+  }
+  .modal-heading-icon {
+    margin-right: 16px;
+  }
+  .modal-body {
+    padding: 16px;
+  }
+  
+  .modal-label {
+    display: block;
+    font-size: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .modal-input {
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .modal-footer {
+    padding: 16px;
+    text-align: right;
+  }
+  .modal-footer a {
+    color: #2196f3;
+  }
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-150px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  .h2allrule {
+    margin-left: 15px;
+  }
+  .ctgrallrule {
+    margin: 15px;
+    padding-top: 50px;
+  }
+  .ctgrallrule h1{
+    font-size: 24px;
+  }
+  .ctgrpage {
+    margin: 15px;
+    padding-top: 50px;
+  }
+  .ctgrpage ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+  .ctgrpage ul h2{
+    font-family: 'Ubuntu', sans-serif;
+  }
+  .ctgrpage h1{
+    font-family: 'Ubuntu', sans-serif;
+    color:#000
+  }
+  
+  .ctgrpage ul li h2 a {
+    text-transform: capitalize;
+    color: black;
+    text-decoration: none;
+  }
+  /*start of converter page format*/
+  .fconvert {
+    padding-top: 80px;
+  }
+  .cvt { 
+    padding-top: 20px;
+    background-color: #202020;
+  }
+  
+  .cvt h1 {
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  .converter-wrapper {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 70px;
+    box-sizing: border-box;
+  }
+  .converter-wrapper input {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+    width: 10%;
+    text-align: left;
+    margin-top: 10px;
+    height: 30px;
+    box-sizing: border-box;
+  }
+  .converter-result {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    height: 40px;
+    box-sizing: border-box;
+  }
+  .converter-side-a{
+    float: left;
+    margin-top: 10px;
+    box-sizing: border-box;
+    width: 45%;
+  }
+  .converter-side-b {
+    float: left;
+    margin-top: 10px;
+    box-sizing: border-box;
+    width: 45%;
+  }
+  
+  .converter-equals {
+    float: left;
+    box-sizing: border-box;
+    width: 10%;
+    color: 333;
+    font-size: 2.4em;
+    line-height: 0;
+    text-align: center;
+  }
+  
+  .converter-side-a {
+    padding-right: 10px;
+  }
+  
+  .converter-side-b {
+    padding-left: 10px;
+  }
+  .convert-button {
+    background-color: grey;
+    color: white;
+    border: 1px solid white;
+    border-radius: 0px;
+    padding: 7px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .convert-button:hover {
+    background-color: white;
+    color: #008000;
+    border-color: #008000;
+  }
+  .convert-text-form-a {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+    width: 100%;
+  }
+  .storelink {
+    font-family: 'Ubuntu', sans-serif;
+    position: absolute;
+    padding-bottom: 150px;
+    bottom: 0;
+    right:0;
+  }
+  .msgdetail{
+    padding-top: 70px;
+    margin: 0;
+  }
+  .message-wrapper {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    box-sizing: border-box;
+    padding: 8px;
+  }
+  .msg {
+    background-color: black;
+    color:white;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  
+  .dropdown-navbar li.dropdown {
+    position: relative; /* Needed for absolute positioning of dropdown content */
+    display: inline-flex;
+  }
+  
+  .dropdown-navbar li.dropdown a.dropbtn {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .dropdown-navbar li.dropdown:hover a.dropbtn {
+    color: red;
+  }
+  
+  .dropdown-navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position it just below the button */
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-navbar .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  .dropdown-navbar .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown-navbar li.dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .guntype-allrule {
+    margin: 15px;
+    padding-top: 100px;
+    color: #000;
+  }
+  .ctgrallrule h1{
+    font-size: 24px;
+  }
+  .all-guns-page .all-guns-main {
+    align-items: center;
+  }
+  
+  .all-guns-page .all-guns-places-list {
+    margin-top: 16px;
+    padding-bottom: 48px;
+  }
+  
+  .all-guns-page .all-guns-place-img {
+    padding-top: 10px;
+    width: 100%;
+    max-width: 1200px;
+    display: block;
+  }
+  
+  .all-guns-page .all-guns-place-img:hover {
+    opacity: 0.6;
+  }
+  
+  .all-guns-page .all-guns-rule-content {
+    padding: 16px;
+    font-size: 15px;
+    background-color: #fff;
+  }
+  
+  .all-guns-page .all-guns-rule-name {
+    font-size: 15px;
+    font-weight: 600;
+    
+  }
+  
+  .all-guns-page .all-guns-description {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 1200px;
+    max-width: 100%;
+    max-height: 100px;
+    opacity: 0.6;
+    margin-top: 15px;
+  }
+  
+  .all-guns-page .all-guns-rule-basicdesc {
+    width: 340px;
+    height: 200px;
+    max-height: 50%;
+    margin-top: 15px;
+    line-height: 1.4;
+  }
+  .gun-content{
+    padding-top: 70px;
+    display: block;
+  }
+  .season-info{
+    padding-top: 80px;
+    padding-bottom: 120px;
+    font-family: 'Ubuntu', sans-serif;
+    align-items: center;
+  }
+  .update-menu{
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+  }
+  .season-info ul{
+    list-style-type: none;
+  }
+  .message-page body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+  }
+  .message-page .inbox {
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .message-page .mail-container {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .message-page .mail-item {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s;
+    background-color: lightgray;
+  }
+  .message-page .delete-form {
+    display: flex;
+    flex:0 0 auto;
+    padding: 15px 20px;
+  }
+  .message-page .mail-item:hover {
+    background-color: #f6f6f6;
+  }
+  .message-page .left,
+  .message-page .right {
+    flex:0 0 auto;
+  }
+  .message-page .left {
+    display: flex;
+    align-items: center;
+  }
+  .message-page .id {
+    font-weight: normal;
+    margin-right: 10px;
+  }
+  .message-page .sender {
+    font-weight: normal;
+    margin-left:0px;
+  }
+  .message-page .email {
+    font-weight: normal;
+  }
+  .message-page .subject {
+    flex: 1 0 auto;
+    max-width: 100%;
+    vertical-align:middle;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+  .message-page .unread {
+    background-color: white;
+  }
+  .message-page .right {
+    display: flex;
+    width: 200px;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  

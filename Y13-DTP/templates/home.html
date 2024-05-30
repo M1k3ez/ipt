@@ -1,0 +1,8 @@
+{% block content %}
+    <h1>Homepage</h1>
+    <ul>
+        {% for items in elements %}
+            <li>{{ items.some_attribute }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

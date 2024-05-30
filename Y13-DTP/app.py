@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from models import db, elementcontent
 
@@ -11,14 +11,16 @@ db.init_app(app)
 @app.route('/')
 def home():
     try:
-        elements = elementcontent.query.filter( elementcontent.enegativity != 'N/A',\
-                                                elementcontent.enegativity > '1.5').all()
-        if not elements:
-            return "No elements found."
-        element_list = [f"{e.electron} {e.name} ({e.symbol}):  eNeg: {e.enegativity}, " for e in elements]
-        return '<br>'.join(element_list)
+        elements = elementcontent.query.filter(
+            elementcontent.enegativity != 'N/A',
+            elementcontent.enegativity > '1.5'
+        ).all()
+        if elements:
+            return render_template("home.html", elements=elements)
+        else:
+            return render_template("404.html")
     except Exception as e:
-        return f"An error occurred: {str(e)}", 500
+        return str(e), 500
 
 
 if __name__ == '__main__':
