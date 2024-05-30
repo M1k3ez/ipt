@@ -1,8 +1,10 @@
+{% extends "layout.html" %}
+
 {% block content %}
     <h1>Homepage</h1>
     <ul>
-        {% for items in elements %}
-            <li>{{ items.some_attribute }}</li>
+        {% for item in elements %}
+            <li>{{ item.electron }} {{ item.name }} ({{ item.symbol }}): eNeg: {{ item.enegativity }}</li>
         {% endfor %}
     </ul>
 {% endblock %}

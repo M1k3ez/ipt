@@ -15,6 +15,7 @@ def home():
             elementcontent.enegativity != 'N/A',
             elementcontent.enegativity > '1.5'
         ).all()
+        print(elements)
         if elements:
             return render_template("home.html", elements=elements)
         else:
