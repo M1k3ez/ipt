@@ -71,7 +71,6 @@ def send_mail():
         smtp.sendmail(app.config['MAIL_DEFAULT_SENDER'], ["ipttnoreply@gmail.com"], msg.as_string())
         smtp.quit()
 
-        mail.send(msg)
         return "Mail sent!"
     except smtplib.SMTPException as e:
         logging.error("SMTP error occurred: ", exc_info=e)
