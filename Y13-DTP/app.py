@@ -1,22 +1,29 @@
 from flask import Flask, render_template, flash, request
-from models import db, elementcontent
+from models import db, elementcontent  # Ensure this module is correctly set up
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import os
 
-app = Flask(__name__)
-mail = Mail(app)
 
+load_dotenv()
+
+app = Flask(__name__)
+
+# dtb configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ipt.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# flask-mail configuration
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
-app.config['MAIL_PORT'] = os.getenv('MAIL_PORT')
-app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS')
-app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT') or 0)
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
+app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 db.init_app(app)
+
+mail = Mail(app)
 
 
 @app.route('/')
@@ -26,7 +33,6 @@ def home():
             elementcontent.enegativity != 'N/A',
             elementcontent.enegativity > '1.5'
         ).all()
-        print(elements)
         if elements:
             return render_template("home.html", elements=elements)
         else:
@@ -35,12 +41,15 @@ def home():
         return str(e), 500
 
 
-@app.route("/send-mail/")
+@app.route("/sendmail")
 def send_mail():
-    msg = Message("Hello", recipients=["ipttnoreply@gmail.com"])
-    msg.body = "This is a test email sent from a Flask app using Flask-Mail."
-    mail.send(msg)
-    return "Mail sent!"
+    try:
+        msg = Message("Hello", recipients=["ipttnoreply@gmail.com"])
+        msg.body = "This is a test email sent from a Flask app using Flask-Mail."
+        mail.send(msg)
+        return "Mail sent!"
+    except Exception as e:
+        return str(e), 500
 
 
 if __name__ == '__main__':
