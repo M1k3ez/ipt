@@ -9,9 +9,12 @@ from sqlalchemy import cast, Float
 import os
 import logging
 
+
 load_dotenv()
 
+
 app = Flask(__name__)
+
 
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
@@ -29,6 +32,7 @@ app.config['MAIL_DEBUG'] = True
 mail = Mail(app)
 db.init_app(app)
 
+
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=2, max=50)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -41,6 +45,7 @@ class ContactForm(FlaskForm):
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send Message')
 
+
 @app.route('/')
 def home():
     elements = elementcontent.query.filter(
@@ -48,6 +53,7 @@ def home():
         cast(elementcontent.enegativity, Float) > 1.5
     ).all()
     return render_template("home.html", elements=elements) if elements else render_template("404.html")
+
 
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
@@ -60,7 +66,8 @@ def contact():
                 recipients=["ipttnoreply@gmail.com"]
             )
             msg.reply_to = form.email.data
-            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
+            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n\
+            Phone: {form.telephone.data}\nMessage: {form.message.data}"
             mail.send(msg)
             flash('Your message has been sent successfully!', 'success')
         except Exception as e:
@@ -68,6 +75,7 @@ def contact():
             flash(f'Failed to send message: {str(e)}', 'error')
         return redirect(url_for('contact'))
     return render_template('contact.html', form=form)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)

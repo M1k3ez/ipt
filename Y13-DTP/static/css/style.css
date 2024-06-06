@@ -228,67 +228,59 @@ Others CSS are written by myself. */
     z-index: 9999;
   }
   
-  .flash-box {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 5px;
-  }
+.flash-box {
+  margin: 10px 0;
+  padding: 10px;
+ background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+}
   
-  #footer {
-    padding: 24px 16px;
-    text-align: center;
-    background-color: black;
-    margin-top:0px;
-    position:fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  #footer .socical-list {
-    font-size: 24px;
-  }
-  
-  #footer .socical-list a {
-    color: white;
-    opacity: 1;
-    text-decoration: none;
-    padding-bottom: 3px;
-    padding-top: 3px
-  }
-  
-  #footer .socical-list li{
-    display: inline-flex;
-  }
-  
-  #footer .footer-text{
-    display: inline-flex;
-    color: white;
-    padding-top:0px;
-    padding-bottom: 5px;
-  }
-  
-  #footer .socical-list a:hover,#footer .copyright a:hover{
-    opacity: 0.3;
-  }
-  
-  #footer .footer-copyright li{
-    padding: 5px 1px;
-    text-align: center;
-    display: inline-flex;
-    color: white;
-  }
-  
-  .allmessage-wrapper {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    padding-top: 0px;
-    box-sizing: border-box;
-    padding: 5px;
-  }
+#footer {
+  padding: 24px 16px;
+  text-align: center;
+  background-color: #442196;
+  margin-top: 0px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#footer .socical-list {
+  font-size: 24px;
+}
+
+#footer .socical-list a {
+  color: white;
+  opacity: 1;
+  text-decoration: none;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+#footer .socical-list li {
+  display: inline-flex;
+}
+
+#footer .footer-text {
+  display: inline-flex;
+  color: white;
+  padding-top: 0px;
+  padding-bottom: 5px;
+}
+
+#footer .socical-list a:hover,
+#footer .footer-copyright a:hover {
+  opacity: 0.3;
+}
+
+#footer .footer-copyright li {
+  padding: 5px 1px;
+  text-align: center;
+  display: inline-flex;
+  color: white;
+}
   
   .allmsgh1  {
     background-color: black;
