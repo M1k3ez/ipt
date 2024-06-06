@@ -4,13 +4,13 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 from sqlalchemy import cast, Float
 import os
-import logging
 
 load_dotenv()
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ipt.sqlite3'
+db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
@@ -24,33 +24,20 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
 mail = Mail(app)
 db.init_app(app)
 
-logging.basicConfig(level=logging.DEBUG)
-
 @app.route('/')
 def home():
-    try:
-        # Directly query and print all elements
-        all_elements = elementcontent.query.all()
-        logging.debug(f'Total elements in table: {len(all_elements)}')
-        for element in all_elements:
-            logging.debug(f'Element ID: {element.electron}, Enegativity: {element.enegativity}')
-            print(f'Element ID: {element.electron}, Enegativity: {element.enegativity}')
-        
-        return render_template("home.html", elements=all_elements)
-    except Exception as e:
-        logging.error(f'Error occurred: {e}')
-        return str(e), 500
+    elements = elementcontent.query.filter(
+        elementcontent.enegativity != 'N/A',
+        cast(elementcontent.enegativity, Float) > 1.5
+    ).all()
+    return render_template("home.html", elements=elements) if elements else render_template("404.html")
 
 @app.route("/sendmail")
 def send_mail():
-    try:
-        msg = Message("Hello", recipients=["thule001127@gmail.com"])
-        msg.body = "This is a test email sent from a Flask app using Flask-Mail. Anh yeu em"
-        mail.send(msg)
-        return "Mail sent!"
-    except Exception as e:
-        logging.error(f'Error occurred while sending mail: {e}')
-        return str(e), 500
+    msg = Message("Hello", recipients=["ipttnoreply@gmail.com"])
+    msg.body = "This is a test email sent from a Flask app using Flask-Mail. Anh yeu em"
+    mail.send(msg)
+    return "Mail sent!"
 
 if __name__ == '__main__':
     with app.app_context():
