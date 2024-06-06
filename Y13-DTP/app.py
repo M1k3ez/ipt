@@ -3,46 +3,60 @@ from flask_mail import Mail, Message
 from models import db, elementcontent
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, Regexp
 from dotenv import load_dotenv
 from sqlalchemy import cast, Float
 import os
-import logging
-
 
 load_dotenv()
-
 
 app = Flask(__name__)
 
 
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your-secret-key'  # Needed for CSRF protection in forms
-app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
-app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT') or 0)
-app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS') == 'True'
-app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL') == 'True'
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
-app.config['MAIL_DEBUG'] = True
+app.config.update(
+    SQLALCHEMY_DATABASE_URI=f'sqlite:///{db_path}',
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    SECRET_KEY='your-secret-key',
+    MAIL_SERVER=os.getenv('MAIL_SERVER'),
+    MAIL_PORT=int(os.getenv('MAIL_PORT') or 0),
+    MAIL_USE_TLS=os.getenv('MAIL_USE_TLS') == 'True',
+    MAIL_USE_SSL=os.getenv('MAIL_USE_SSL') == 'True',
+    MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD'),
+    MAIL_DEFAULT_SENDER=os.getenv('MAIL_DEFAULT_SENDER'),
+    MAIL_DEBUG=False
+)
 
 mail = Mail(app)
 db.init_app(app)
 
 
 class ContactForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=50)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    telephone = StringField('Telephone', validators=[DataRequired(), Length(min=6, max=20)])
+    name = StringField('Name', validators=[
+        DataRequired(),
+        Length(max=24),
+        Regexp('^[a-zA-Z ]*$', message="Name must contain only letters and spaces.")
+    ])
+    email = StringField('Email', validators=[
+        DataRequired(),
+        Email(),
+        Length(max=30)
+    ])
+    telephone = StringField('Telephone', validators=[
+        DataRequired(),
+        Length(max=15),
+        Regexp('^[0-9]*$', message="Phone number must contain only numbers.")
+    ])
     subject = SelectField('Subject', choices=[
         ('start_project', "Advice"),
         ('ask_question', "Questions"),
-        ('make_proposal', "Proposal")],
-        validators=[DataRequired()])
-    message = TextAreaField('Message', validators=[DataRequired()])
+        ('make_proposal', "Proposal")
+    ], validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[
+        DataRequired(),
+        Length(max=600)
+    ])
     submit = SubmitField('Send Message')
 
 
@@ -52,33 +66,29 @@ def home():
         elementcontent.enegativity != 'N/A',
         cast(elementcontent.enegativity, Float) > 1.5
     ).all()
-    return render_template("home.html", elements=elements) if elements else render_template("404.html")
+    return render_template("home.html", elements=elements) if elements else\
+        render_template("404.html")
 
 
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        try:
-            msg = Message(
-                subject=form.subject.data,
-                sender=app.config['MAIL_DEFAULT_SENDER'],
-                recipients=["ipttnoreply@gmail.com"]
-            )
-            msg.reply_to = form.email.data
-            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n\
-            Phone: {form.telephone.data}\nMessage: {form.message.data}"
-            mail.send(msg)
-            flash('Your message has been sent successfully!', 'success')
-        except Exception as e:
-            logging.error("Failed to send email", exc_info=True)
-            flash(f'Failed to send message: {str(e)}', 'error')
+        msg = Message(
+            subject=form.subject.data,
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=["ipttnoreply@gmail.com"]
+        )
+        msg.reply_to = form.email.data
+        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n\
+        Phone: {form.telephone.data}\nMessage: {form.message.data}"
+        mail.send(msg)
+        flash('Your message has been sent successfully!', 'success')
         return redirect(url_for('contact'))
     return render_template('contact.html', form=form)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
     with app.app_context():
         db.create_all()
     app.run(debug=True)

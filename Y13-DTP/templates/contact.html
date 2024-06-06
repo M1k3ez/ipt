@@ -7,15 +7,15 @@
         {{ form.hidden_tag() }}
         <div class="name">
             {{ form.name.label(hidden=True) }}
-            {{ form.name(id='name_input', placeholder='My name is') }}
+            {{ form.name(id='name_input', placeholder='My name is', pattern="[A-Za-z ]{1,24}", title="Name must contain only letters and spaces, and be no longer than 24 characters.") }}
         </div>
         <div class="email">
             {{ form.email.label(hidden=True) }}
-            {{ form.email(id='email_input', placeholder='My e-mail is') }}
+            {{ form.email(id='email_input', placeholder='My e-mail is', maxlength="30", pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}", title="Email must be a valid email address and no longer than 30 characters.") }}
         </div>
         <div class="telephone">
             {{ form.telephone.label(hidden=True) }}
-            {{ form.telephone(id='telephone_input', placeholder='My number is') }}
+            {{ form.telephone(id='telephone_input', placeholder='My number is', maxlength="15", pattern="[0-9]{1,15}", title="Phone number must contain only numbers and be no longer than 15 digits.") }}
         </div>
         <div class="subject">
             {{ form.subject.label(hidden=True) }}
@@ -23,7 +23,7 @@
         </div>
         <div class="message">
             {{ form.message.label(hidden=True) }}
-            {{ form.message(id='message_input', placeholder="I'd like to chat about") }}
+            {{ form.message(id='message_input', placeholder="I'd like to chat about", maxlength="600", title="Message must be less than 600 characters.") }}
         </div>
         <div class="submit">
             {{ form.submit(id='form_button') }}

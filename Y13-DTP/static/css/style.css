@@ -236,10 +236,10 @@ Others CSS are written by myself. */
   border-radius: 5px;
 }
   
-#footer {
-  padding: 24px 16px;
+.footer {
+  padding: 8px 4px;
   text-align: center;
-  background-color: #442196;
+  background-color: #4a2196;
   margin-top: 0px;
   position: fixed;
   left: 0;
@@ -247,36 +247,37 @@ Others CSS are written by myself. */
   width: 100%;
 }
 
-#footer .socical-list {
+.footer .socical-list {
   font-size: 24px;
 }
 
-#footer .socical-list a {
+.footer .socical-list a {
   color: white;
   opacity: 1;
   text-decoration: none;
-  padding-bottom: 3px;
-  padding-top: 3px;
+  padding-bottom: 1px;
+  padding-top: 1px;
 }
 
-#footer .socical-list li {
+.footer .socical-list li {
   display: inline-flex;
 }
 
-#footer .footer-text {
+.footer .footer-text {
   display: inline-flex;
   color: white;
+  text-align: center;
   padding-top: 0px;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
-#footer .socical-list a:hover,
-#footer .footer-copyright a:hover {
+.footer .socical-list a:hover,
+.footer .footer-copyright a:hover {
   opacity: 0.3;
 }
 
-#footer .footer-copyright li {
-  padding: 5px 1px;
+.footer .footer-copyright li {
+  padding: 0px 1px;
   text-align: center;
   display: inline-flex;
   color: white;
@@ -535,6 +536,7 @@ Others CSS are written by myself. */
   
   .container {
     padding: 2px 16px;
+    padding-top: 10px;
   }
   .btn {
     color: #fff;
