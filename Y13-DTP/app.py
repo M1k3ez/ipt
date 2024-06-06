@@ -29,24 +29,14 @@ logging.basicConfig(level=logging.DEBUG)
 @app.route('/')
 def home():
     try:
+        # Directly query and print all elements
         all_elements = elementcontent.query.all()
         logging.debug(f'Total elements in table: {len(all_elements)}')
         for element in all_elements:
             logging.debug(f'Element ID: {element.electron}, Enegativity: {element.enegativity}')
+            print(f'Element ID: {element.electron}, Enegativity: {element.enegativity}')
         
-        elements = elementcontent.query.filter(
-            elementcontent.enegativity != 'N/A',
-            cast(elementcontent.enegativity, Float) > 1.5
-        ).all()
-        
-        logging.debug(f'Query returned {len(elements)} elements.')
-        for element in elements:
-            logging.debug(f'Filtered Element ID: {element.electron}, Enegativity: {element.enegativity}')
-        
-        if elements:
-            return render_template("home.html", elements=elements)
-        else:
-            return render_template("404.html")
+        return render_template("home.html", elements=all_elements)
     except Exception as e:
         logging.error(f'Error occurred: {e}')
         return str(e), 500
