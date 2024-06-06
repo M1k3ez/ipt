@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="container">
+    <h1>&bull; Keep in Touch &bull;</h1>
+    <div class="underline"></div>
+    <form action="{{ url_for('contact') }}" method="post" id="contact_form">
+        {{ form.hidden_tag() }}
+        <div class="name">
+            {{ form.name.label(hidden=True) }}
+            {{ form.name(id='name_input', placeholder='My name is') }}
+        </div>
+        <div class="email">
+            {{ form.email.label(hidden=True) }}
+            {{ form.email(id='email_input', placeholder='My e-mail is') }}
+        </div>
+        <div class="telephone">
+            {{ form.telephone.label(hidden=True) }}
+            {{ form.telephone(id='telephone_input', placeholder='My number is') }}
+        </div>
+        <div class="subject">
+            {{ form.subject.label(hidden=True) }}
+            {{ form.subject(id='subject_input') }}
+        </div>
+        <div class="message">
+            {{ form.message.label(hidden=True) }}
+            {{ form.message(id='message_input', placeholder="I'd like to chat about") }}
+        </div>
+        <div class="submit">
+            {{ form.submit(id='form_button') }}
+        </div>
+    </form>
+</div>
+{% endblock %}
