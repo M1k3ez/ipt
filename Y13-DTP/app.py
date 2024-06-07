@@ -49,9 +49,9 @@ class ContactForm(FlaskForm):
         Regexp('^[0-9]*$', message="Phone number must contain only numbers.")
     ])
     subject = SelectField('Subject', choices=[
-        ('start_project', "Advice"),
-        ('ask_question', "Questions"),
-        ('make_proposal', "Proposal")
+        ('Advice', "Advice"),
+        ('Questions', "Questions"),
+        ('proposal', "Proposal")
     ], validators=[DataRequired()])
     message = TextAreaField('Message', validators=[
         DataRequired(),
@@ -80,7 +80,7 @@ def contact():
             recipients=["ipttnoreply@gmail.com"]
         )
         msg.reply_to = form.email.data
-        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n\
+        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n \
         Phone: {form.telephone.data}\nMessage: {form.message.data}"
         mail.send(msg)
         flash('Your message has been sent successfully!', 'success')
