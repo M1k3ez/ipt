@@ -62,10 +62,7 @@ class ContactForm(FlaskForm):
 
 @app.route('/')
 def home():
-    elements = elementcontent.query.filter(
-        elementcontent.enegativity != 'N/A',
-        cast(elementcontent.enegativity, Float) > 1.5
-    ).all()
+    elements = elementcontent.query.all()
     return render_template("home.html", elements=elements) if elements else\
         render_template("404.html")
 

@@ -1,343 +1,161 @@
-/* CSS Notes: CSS are inspired and ideas largely from W3S and codepen.
-Ciatation:
-Contact form:
-https://codepen.io/dvtfskip-the-sans/pen/bGOYEPO
-converter form:
-https://codepen.io/jacobbanner/pen/oxeoqp
-all_rules and all_guns layout are inspired from https://www.w3schools.com/w3css/w3css_web_tmp_band.asp#gsc.tab=0
-Hover effects for nav bar: https://codepen.io/maheshambure21/pen/QwXaRw
-Others CSS are written by myself. */
-/* NAVIGATION */
-/* General styles for the navigation container */
-.nav {
-    width: 80%; 
-    margin: 0 auto; 
-    padding: 1px 0; 
-  }
-  
-  /* Styles for unordered lists within the navigation */
-  .nav ul {
-    font-family: 'Ubuntu', sans-serif; 
-    font-size: 15px; 
-    list-style: none; 
-    text-align: center;
-  }
-  
-  /* Styles for list items within the navigation, display inline-flex makes it a horizontal navigation bar */
-  .nav ul li {
-    display: inline-flex;
-  }
-  
-  /* Styles for anchor tags within navigation list items */
-  .nav ul li a {
-    display: block; 
-    padding: 15px; 
-    text-decoration: none;
-    color: #fff; 
-    font-weight: 800; 
-    text-transform: uppercase;
-    margin: 0 10px; 
-  }
-  
-  /* Transition effect for anchor tags and their pseudo-elements in the navigation */
-  .nav ul li a,
-  .nav ul li a:after,
-  .nav ul li a:before {
-    transition: all 500ms; /* Smooth transition effect for all items in navbar */
-  }
-  
-  /* Change color to red on hover over navigation links */
-  .nav ul li a:hover {
-    color: red;
-  }
-  
-  /* Create a "stroke" effect (underline) for navigation links */
-  .nav ul li a,
-  .nav.fill ul li a {
-    position: relative; /* Establish a stacking context for pseudo-elements */
-  }
-  
-  /* Hidden underline for navigation links, shown on hover */
-  .nav ul li a:after,
-  .nav.fill ul li a:after {
-    position: absolute;
-    bottom: 0; 
-    left: 0;
-    right: 0;
-    margin: auto; 
-    width: 0%; /* Initially set to 0 width */
-    content: '.';
-    color: transparent; /* Make the content color transparent */
-    background: #aaa; /* Set the background color for the underline */
-    height: 1px;
-  }
-  
-  /* Show the underline on hover */
-  .nav ul li a:hover:after {
-    width: 100%; /* Expand the underline to full width */
-  }
-  
-  /* Transition and initial styles for navigation links with "fill" class */
-  .nav.fill ul li a {
-    transition: all 500ms;
-  }
-  
-  /* Hide the pseudo-element underline for navigation links with "fill" class */
-  .nav.fill ul li a:after {
-    text-align: left;
-    content: '.';
-    margin: 0;
-    opacity: 0; /* Completely transparent */
-  }
-  
-  /* Hover styles for navigation links with "fill" class */
-  .nav.fill ul li a:hover {
-    color: #fff;
-    z-index: 1;
-  }
-  
-  /* Styling effects upon hovering over navigation links with "fill" class */
-  .nav.fill ul li a:hover:after {
-    z-index: -10; /* Place the underline below other elements */
-    animation: fill 1s forwards; /* Animation named "fill" which runs for 1 second and retains its end state */
-    /* Prefixes for older browsers */
-    -webkit-animation: fill 1s forwards;
-    -moz-animation: fill 1s forwards;
-    opacity: 1;
-  }
-  
-  /* Similar styles are then provided for elements with class "logo" and "logo-text". 
-  These are for branding or website logo elements. */
-  .margin0 {
-    margin:0;
-  }
-  
-  .homebgimg {
-    width:100%;
-  }
-  
-  .logo {
-    display:flex;
-    align-items: center;
-    padding:0px;
-  }
-  
-  .logo img {
-    width:70px;
-    height:auto;
-  }
-  
-  .logo-text {
-    font-family: 'Ubuntu', sans-serif;;
-    font-size: 24px;
-    font-weight: bold;
-    margin-left: 10px;
-    text-align: center;
-  }
-  
-  .logo-text li{
-    display: inline-flex;
-  }
-  
-  .logo-text li a{
-    text-decoration: none;
-    color: #B853DC;
-  }
-  
-  .logo-text li a,
-  .logo-text li a:after,
-  .logo-text li a:before {
-    transition: all .5s;
-  }
-  
-  .logo-text li a:hover {
-    color: red;
-  }
-  
-  /* stroke */
-  .logo-text li a,
-  .logo-text.fill li a {
-    position: relative;
-  }
-  
-  .logo-text li a:after,
-  .logo-text.fill ul li a:after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 0%;
-    content: '.';
-    color: transparent;
-    background: #aaa;
-    height: 1px;
-  }
-  
-  .logo-text li a:hover:after {
-    width: 100%;
-  }
-  
-  .logo-text.fill ul li a {
-    transition: all 2s;
-  }
-  
-  .logo-text.fill ul li a:after {
-    text-align: left;
-    content: '.';
-    margin: 0;
-    opacity: 0;
-  }
-  
-  .logo-text.fill ul li a:hover {
-    color: #fff;
-    z-index: 1;
-  }
-  
-  .logo-text ul li a:hover:after {
-    z-index: -10;
-    animation: fill 1s forwards;
-    -webkit-animation: fill 1s forwards;
-    -moz-animation: fill 1s forwards;
-    opacity: 1;
-  }
-  
-  /* Fixed position header with a background and full width */
-  .header {
-    display: flex;
-    color: #fff;
-    padding: 0px;
-    position: fixed;
-    align-items: center;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-  
-  .flash-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #f0f0f0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    z-index: 9999;
-  }
-  
-.flash-box {
-  margin: 10px 0;
-  padding: 10px;
- background-color: #333;
-  color: #fff;
-  border-radius: 5px;
+/* General Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(315deg, #ffffff, #d7e1ec);
 }
-  
+.container {
+  flex: 1;
+  margin-top: 60px; /* Add margin to avoid content being hidden under the navbar */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*:focus, *:active {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #4a2196;
+  z-index: 1000; /* Ensure the header stays on top */
+}
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.logo img {
+  width: 70px;
+  height: auto;
+}
+.logo-text {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.logo-text a {
+  text-decoration: none;
+  color: #B853DC;
+  transition: color .5s;
+}
+.logo-text a:hover {
+  color: red;
+}
+
+/* Navigation */
+.nav {
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 1px 0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav ul {
+  font-family: 'Ubuntu', sans-serif; 
+  font-size: 15px; 
+  list-style: none; 
+  display: flex;
+}
+.nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+.nav ul li a {
+  display: block; 
+  padding: 15px; 
+  text-decoration: none;
+  color: #fff; 
+  font-weight: 800; 
+  text-transform: uppercase;
+  transition: color 500ms;
+}
+.nav ul li a:hover {
+  color: red;
+}
+
+/* Footer */
 .footer {
   padding: 2px 1px;
   text-align: center;
   background-color: #4a2196;
-  margin-top: 0px;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
 }
-
-.footer .footer-text {
-  display: block;
+.footer-text {
   color: white;
-  text-align: center;
   padding: 1px 0;
   font-size: 12px;
   line-height: 1.1em;
 }
-
-.footer .socical-list {
-  font-size: 16px;
-  margin-bottom: 2px;
-}
-
-.footer .socical-list a {
-  color: white;
-  opacity: 1;
-  text-decoration: none;
-  padding: 0 3px;
-}
-
-.footer .socical-list li {
+.footer .wrapper {
   display: inline-flex;
-  margin: 0 3px;
+  list-style: none;
 }
-
-.footer .socical-list a:hover,
-.footer .footer-copyright a:hover {
-  opacity: 0.3;
+.footer .icon {
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
-.footer .footer-copyright {
+.footer .icon:hover {
+  color: #fff;
+}
+.footer .icon.facebook:hover {
+  background: #1877F2;
+}
+.footer .icon.twitter:hover {
+  background: #1DA1F2;
+}
+.footer .icon.instagram:hover {
+  background: #E4405F;
+}
+.footer .icon.github:hover {
+  background: #333333;
+}
+.footer .icon.youtube:hover {
+  background: #CD201F;
+}
+.footer-copyright {
   padding: 1px 0;
   font-size: 12px;
   margin-top: 2px;
-}
-
-.footer .footer-copyright li {
-  padding: 0 1px;
-  text-align: center;
-  display: inline-flex;
   color: white;
 }
 
-
-  @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-
-html {
-  font-family: 'Montserrat', Arial, sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  background: #F2F3EB;
-}
-
-button {
-  overflow: visible;
-}
-
-button, select {
-  text-transform: none;
-}
-
-button, input, select, textarea {
-  color: #5A5A5A;
-  font: inherit;
-  margin: 0;
-}
-
-input {
-  line-height: normal;
-}
-
-textarea {
-  overflow: auto;
-}
-
+/* Form */
 #container {
   border: solid 3px #474544;
-  padding-top:18px;
+  padding-top: 18px;
   max-width: 768px;
   margin: 60px auto;
   position: relative;
 }
-
 form {
   padding: 37.5px;
   margin: 50px 0;
 }
-
 h1 {
   color: #474544;
   font-size: 32px;
@@ -346,92 +164,42 @@ h1 {
   text-align: center;
   text-transform: uppercase;
 }
-
 .underline {
   border-bottom: solid 2px #474544;
   margin: -0.512em auto;
   width: 80px;
 }
-
-.icon_wrapper {
-  margin: 50px auto 0;
-  width: 100%;
-}
-
-.icon {
-  display: block;
-  fill: #474544;
-  height: 50px;
-  margin: 0 auto;
-  width: 50px;
-}
-
-.email {
-  float: right;
-  width: 45%;
-}
-
 input[type='text'], input[type='email'], select, textarea {
   background: none;
   border: none;
   border-bottom: solid 2px #474544;
   color: #474544;
-  font-size: 1.000em;
+  font-size: 1em;
   font-weight: 400;
   letter-spacing: 1px;
-  margin: 0em 0 1.875em 0;
+  margin: 0 0 1.875em 0;
   padding: 0 0 0.875em 0;
   text-transform: uppercase;
   width: 100%;
   box-sizing: border-box;
   transition: all 0.3s;
 }
-
 input[type='text']:focus, input[type='email']:focus, textarea:focus {
   outline: none;
-  padding: 0 0 0.875em 0;
 }
-
-.message {
-  float: none;
-}
-
-.name {
-  float: left;
-  width: 45%;
-}
-
-select {
-  background: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-down-32.png') no-repeat right;
-  outline: none;
-  appearance: none;
-}
-
-select::-ms-expand {
-  display: none;
-}
-
-.subject, .telephone {
-  width: 100%;
-}
-
 textarea {
   line-height: 150%;
   height: 150px;
   resize: none;
-  width: 100%;
 }
-
 ::placeholder {
   color: #474544;
 }
-
 #form_button {
   background: none;
   border: solid 2px #474544;
   color: #474544;
   cursor: pointer;
-  display: inline-block;
   font-family: 'Helvetica', Arial, sans-serif;
   font-size: 0.875em;
   font-weight: bold;
@@ -440,72 +208,64 @@ textarea {
   text-transform: uppercase;
   transition: all 0.3s;
 }
-
 #form_button:hover {
   background: #474544;
   color: #F2F3EB;
 }
 
-@media screen and (max-width: 768px) {
-  #container {
-    margin: 20px auto;
-    width: 95%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  h1 {
-    font-size: 26px;
-  }
-  
-  .underline {
-    width: 68px;
-  }
-  
-  #form_button {
-    padding: 15px 25px;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  h1 {
-    font-size: 18px;
-  }
-  
-  .icon {
-    height: 35px;
-    width: 35px;
-  }
-  
-  .underline {
-    width: 53px;
-  }
-  
-  input[type='text'], input[type='email'], select, textarea {
-    font-size: 0.875em;
-  }
-}
+/* Flash Messages */
 .flashes {
   list-style-type: none;
   padding: 0;
   margin: 20px 0;
 }
-
 .flashes li {
   margin: 10px 0;
   padding: 10px;
   border: 1px solid;
   border-radius: 5px;
 }
-
 .flashes li.success {
   background-color: #d4edda;
   color: #155724;
   border-color: #c3e6cb;
 }
-
 .flashes li.error {
   background-color: #f8d7da;
   color: #721c24;
   border-color: #f5c6cb;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  #container {
+    margin: 20px auto;
+    width: 95%;
+  }
+}
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 26px;
+  }
+  .underline {
+    width: 68px;
+  }
+  #form_button {
+    padding: 15px 25px;
+  }
+}
+@media screen and (max-width: 420px) {
+  h1 {
+    font-size: 18px;
+  }
+  .icon {
+    height: 35px;
+    width: 35px;
+  }
+  .underline {
+    width: 53px;
+  }
+  input[type='text'], input[type='email'], select, textarea {
+    font-size: 0.875em;
+  }
 }
