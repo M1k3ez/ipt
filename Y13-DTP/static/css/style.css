@@ -6,6 +6,9 @@ html, body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(315deg, #ffffff, #d7e1ec);
 }
+.content {
+  font-family: 'Oswald', sans-serif;
+}
 .container {
   flex: 1;
   margin-top: 60px;
