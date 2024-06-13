@@ -268,3 +268,56 @@ textarea {
     font-size: 0.875em;
   }
 }
+/* Add these styles to your existing CSS file */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px); /* Adjust for header height */
+  text-align: center;
+}
+
+.404image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.404text {
+  margin: 0;
+  padding: 0;
+}
+
+.404text li {
+  list-style: none;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.button {
+  background-color: #4a2196;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #331675;
+}
+
+.buttontext {
+  color: white;
+  text-decoration: none;
+}
