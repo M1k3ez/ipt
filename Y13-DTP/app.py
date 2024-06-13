@@ -85,6 +85,11 @@ def contact():
     return render_template('contact.html', form=form)
 
 
+@app.route("/404")
+def handlingerror():
+    return render_template('404.html')
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
