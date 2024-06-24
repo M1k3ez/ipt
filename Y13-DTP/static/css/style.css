@@ -6,22 +6,27 @@ html, body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(315deg, #ffffff, #d7e1ec);
 }
+
 .content {
   font-family: 'Oswald', sans-serif;
 }
+
 .container {
   flex: 1;
   margin-top: 60px;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 *:focus, *:active {
   outline: none !important;
   -webkit-tap-highlight-color: transparent;
 }
+
 .header {
   display: flex;
   align-items: center;
@@ -32,26 +37,31 @@ html, body {
   background-color: #4a2196;
   z-index: 1000;
 }
+
 .logo {
   display: flex;
   align-items: center;
   padding: 0;
 }
+
 .logo img {
   width: 70px;
   height: auto;
 }
+
 .logo-text {
   font-family: 'Ubuntu', sans-serif;
   font-size: 24px;
   font-weight: bold;
   margin-left: 10px;
 }
+
 .logo-text a {
   text-decoration: none;
   color: #B853DC;
   transition: color .5s;
 }
+
 .logo-text a:hover {
   color: red;
 }
@@ -65,16 +75,19 @@ html, body {
   justify-content: center;
   align-items: center;
 }
+
 .nav ul {
   font-family: 'Poppins', sans-serif; 
   font-size: 17px; 
   list-style: none; 
   display: flex;
 }
+
 .nav ul li {
   display: inline;
   margin: 0 10px;
 }
+
 .nav ul li a {
   display: block; 
   padding: 15px; 
@@ -83,6 +96,7 @@ html, body {
   font-weight: 800; 
   transition: color 500ms;
 }
+
 .nav ul li a:hover {
   color: red;
 }
@@ -94,16 +108,19 @@ html, body {
   background-color: #4a2196;
   width: 100%;
 }
+
 .footer-text {
   color: white;
   padding: 1px 0;
   font-size: 12px;
   line-height: 1.1em;
 }
+
 .footer .wrapper {
   display: inline-flex;
   list-style: none;
 }
+
 .footer .icon {
   background: #ffffff;
   border-radius: 50%;
@@ -118,24 +135,31 @@ html, body {
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+
 .footer .icon:hover {
   color: #fff;
 }
+
 .footer .icon.facebook:hover {
   background: #1877F2;
 }
+
 .footer .icon.twitter:hover {
   background: #1DA1F2;
 }
+
 .footer .icon.instagram:hover {
   background: #E4405F;
 }
+
 .footer .icon.github:hover {
   background: #333333;
 }
+
 .footer .icon.youtube:hover {
   background: #CD201F;
 }
+
 .footer-copyright {
   padding: 1px 0;
   font-size: 12px;
@@ -151,10 +175,12 @@ html, body {
   margin: 60px auto;
   position: relative;
 }
+
 form {
   padding: 37.5px;
   margin: 50px 0;
 }
+
 h1 {
   color: #474544;
   font-size: 32px;
@@ -163,11 +189,13 @@ h1 {
   text-align: center;
   text-transform: uppercase;
 }
+
 .underline {
   border-bottom: solid 2px #474544;
   margin: -0.512em auto;
   width: 80px;
 }
+
 input[type='text'], input[type='email'], select, textarea {
   background: none;
   border: none;
@@ -183,17 +211,21 @@ input[type='text'], input[type='email'], select, textarea {
   box-sizing: border-box;
   transition: all 0.3s;
 }
+
 input[type='text']:focus, input[type='email']:focus, textarea:focus {
   outline: none;
 }
+
 textarea {
   line-height: 150%;
   height: 150px;
   resize: none;
 }
+
 ::placeholder {
   color: #474544;
 }
+
 #form_button {
   background: none;
   border: solid 2px #474544;
@@ -207,6 +239,7 @@ textarea {
   text-transform: uppercase;
   transition: all 0.3s;
 }
+
 #form_button:hover {
   background: #474544;
   color: #F2F3EB;
@@ -218,17 +251,20 @@ textarea {
   padding: 0;
   margin: 20px 0;
 }
+
 .flashes li {
   margin: 10px 0;
   padding: 10px;
   border: 1px solid;
   border-radius: 5px;
 }
+
 .flashes li.success {
   background-color: #d4edda;
   color: #155724;
   border-color: #c3e6cb;
 }
+
 .flashes li.error {
   background-color: #f8d7da;
   color: #721c24;
@@ -242,6 +278,7 @@ textarea {
     width: 95%;
   }
 }
+
 @media screen and (max-width: 480px) {
   h1 {
     font-size: 26px;
@@ -253,6 +290,7 @@ textarea {
     padding: 15px 25px;
   }
 }
+
 @media screen and (max-width: 420px) {
   h1 {
     font-size: 18px;
@@ -268,6 +306,7 @@ textarea {
     font-size: 0.875em;
   }
 }
+
 .error-container {
   display: flex;
   flex-direction: column;
@@ -276,6 +315,7 @@ textarea {
   height: calc(100vh - 60px); /* Adjust for header height */
   text-align: center;
   padding: 20px;
+  margin-bottom: 100px; /* Add margin to ensure footer does not overlap */
 }
 
 .image404 {
