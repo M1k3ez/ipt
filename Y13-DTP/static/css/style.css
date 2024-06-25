@@ -215,7 +215,7 @@ textarea {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   transform-origin: right;
-  animation: notify 2s ease-in-out;
+  animation: notify 4s ease-in-out;
   display: flex;
   align-items: center;
 }
