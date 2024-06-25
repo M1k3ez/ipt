@@ -41,7 +41,8 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(),
         Email(),
-        Length(max=30)
+        Length(max=45)
+        
     ])
     telephone = StringField('Telephone', validators=[
         DataRequired(),
