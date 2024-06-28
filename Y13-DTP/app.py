@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
-from models import db, elementcontent
+from models import db, ElementContent, Group, Period, Category
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp
@@ -11,7 +11,6 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-
 
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
 app.config.update(
@@ -62,9 +61,33 @@ class ContactForm(FlaskForm):
 
 @app.route('/')
 def home():
-    elements = elementcontent.query.all()
-    return render_template("home.html", elements=elements) if elements else\
-        render_template("404.html")
+    elements = db.session.query(
+        ElementContent.electron,
+        ElementContent.name,
+        ElementContent.symbol,
+        ElementContent.meltingpoint,
+        ElementContent.boilingpoint,
+        ElementContent.furtherinfo,
+        ElementContent.ydiscover,
+        Group.id.label('group'),
+        Period.pid.label('period')
+    ).join(Group, ElementContent.electron == Group.ecid)\
+     .join(Period, ElementContent.electron == Period.ecid).all()
+    elements = [
+        {
+            "electron": element.electron,
+            "name": element.name,
+            "symbol": element.symbol,
+            "meltingpoint": element.meltingpoint,
+            "boilingpoint": element.boilingpoint,
+            "furtherinfo": element.furtherinfo,
+            "ydiscover": element.ydiscover,
+            "group": element.group,
+            "period": element.period
+        }
+        for element in elements
+    ]
+    return render_template("home.html", elements=elements)
 
 
 @app.route("/contact", methods=['GET', 'POST'])

@@ -1,8 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-    <ul class="content">
-        {% for item in elements %}
-            <li>{{ item.electron }} {{ item.name }} ({{ item.symbol }}): eNeg: {{ item.enegativity }}</li>
+    <div class="periodic-table">
+        {% for element in elements %}
+            <div class="element" style="grid-column: {{ element.group }}; grid-row: {{ element.period }};">
+                <div class="element-symbol">{{ element.symbol }}</div>
+                <div class="element-name">{{ element.name }}</div>
+                <div class="element-number">{{ element.electron }}</div>
+                <div class="element-weight">{{ element.enegativity }}</div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

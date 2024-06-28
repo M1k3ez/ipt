@@ -138,6 +138,43 @@ html, body {
   margin-top: 2px;
   color: white;
 }
+.periodic-table {
+  display: grid;
+  grid-template-columns: repeat(18, minmax(50px, 1fr));
+  gap: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  overflow: hidden; /* Prevent horizontal scrolling */
+}
+.element {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.element:hover {
+  transform: scale(1.05);
+}
+.element-symbol {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a2196;
+}
+.element-name {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #333;
+}
+.element-number, .element-weight {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #777;
+}
+
 #container {
   border: solid 3px #474544;
   padding-top: 18px;
@@ -315,4 +352,37 @@ textarea {
   10% {transform: scaleX(1); opacity: 1;}
   90% {transform: scaleX(1); opacity: 1;}
   100% {transform: scaleX(0); opacity: 0;}
+}
+@media (max-width: 1200px) {
+  .periodic-table {
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .periodic-table {
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  }
+  .element-symbol {
+      font-size: 16px;
+  }
+  .element-name {
+      font-size: 12px;
+  }
+  .element-number, .element-weight {
+      font-size: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .periodic-table {
+      grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  }
+  .element-symbol {
+      font-size: 14px;
+  }
+  .element-name {
+      font-size: 10px;
+  }
+  .element-number, .element-weight {
+      font-size: 8px;
+  }
 }
