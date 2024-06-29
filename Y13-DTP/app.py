@@ -90,7 +90,7 @@ def home():
     return render_template("home.html", elements=elements)
 
 
-@app.route("/contact", methods=['GET', 'POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
@@ -108,9 +108,14 @@ def contact():
     return render_template('contact.html', form=form)
 
 
-@app.route("/404")
+@app.route('/404')
 def handlingerror():
     return render_template('404.html')
+
+
+@app.route('/nav')
+def navigabar():
+    return render_template('nav.html')
 
 
 if __name__ == '__main__':
