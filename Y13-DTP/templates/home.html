@@ -1,13 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="periodic-table">
-        {% for element in elements %}
+<div class="periodic-table">
+    {% for element in elements %}
+        {% if 57 <= element.electron <= 71 %}
+            <div class="element lanthanides" style="grid-column: {{ element.electron - 54 }}; grid-row: 9;">
+        {% elif 89 <= element.electron <= 103 %}
+            <div class="element actinides" style="grid-column: {{ element.electron - 86 }}; grid-row: 10;">
+        {% else %}
             <div class="element" style="grid-column: {{ element.group }}; grid-row: {{ element.period }};">
+        {% endif %}
                 <div class="element-symbol">{{ element.symbol }}</div>
                 <div class="element-name">{{ element.name }}</div>
                 <div class="element-number">{{ element.electron }}</div>
-                <div class="element-weight">{{ element.enegativity }}</div>
+                <div class="element-weight">{{ element.weight }}</div>
             </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
+</div>
 {% endblock %}

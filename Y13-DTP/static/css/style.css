@@ -226,6 +226,7 @@ html, body {
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
+  margin: 5px; /* Ensure some spacing between elements */
 }
 
 .element:hover {
@@ -244,11 +245,28 @@ html, body {
   color: #333;
 }
 
-.element-number, .element-weight {
+.element-number {
   font-size: 12px;
   margin-top: 5px;
   color: #777;
 }
+
+.element-weight {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #777;
+}
+
+.lanthanides {
+  grid-column: 3 / span 15;
+  grid-row: 9;
+}
+
+.actinides {
+  grid-column: 3 / span 15;
+  grid-row: 10;
+}
+
 
 #container {
   border: solid 3px #474544;
