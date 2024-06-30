@@ -7,26 +7,27 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 if (response.error) {
-                    $('#popup-content').html('<p>' + response.error + '</p>');
+                    $('#popup-content').html('<p>' + 404 + '</p>');
                 } else {
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
                     content += '<p>Electron: ' + response.electron + '</p>';
                     content += '<p>Electronegativity: ' + response.enegativity + '</p>';
                     content += '<p>Melting Point: ' + response.meltingpoint + '°C</p>';
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
-                    content += '<p>Details: ' + response.details + '</p>';
                     content += '<p>Year of Discovery: ' + response.ydiscover + '</p>';
+                    content += '<p><a href="' + response.details + '" target="_blank">Details (Press on, NIB.gov)</a></p>';
                     $('#popup-content').html(content);
                 }
-                $('#popup').show();
+                $('.popup').addClass('active');
             },
             error: function(error) {
                 $('#popup-content').html('<p>Error fetching element details.</p>');
-                $('#popup').show();
+                $('.popup').addClass('active');
             }
         });
     });
-    $('#popup-close').click(function() {
-        $('#popup').hide();
+
+    $('.popup .close-btn').click(function() {
+        $('.popup').removeClass('active');
     });
 });

@@ -30,6 +30,7 @@ app.config.update(
 mail = Mail(app)
 db.init_app(app)
 
+
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[
         DataRequired(),
@@ -56,6 +57,7 @@ class ContactForm(FlaskForm):
         Length(max=600)
     ])
     submit = SubmitField('Send Message')
+
 
 @app.route('/')
 def home():
@@ -89,6 +91,7 @@ def home():
         return render_template("home.html", elements=elements)
     except Exception:
         return render_template('404.html'), 500
+
 
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
