@@ -38,6 +38,8 @@
             </div>
     {% endfor %}
 </div>
+
+<!-- Modal for displaying element details -->
 <div id="element-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -49,5 +51,8 @@
         <p id="element-ydiscover"></p>
     </div>
 </div>
-<scripts src="/static/js/elementdetails.js"></scripts>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/elementdetails"></script>
 {% endblock %}

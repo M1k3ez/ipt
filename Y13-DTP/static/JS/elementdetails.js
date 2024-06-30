@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
+                        console.error(`Error fetching details for element ${electron}: ${data.error}`);
                         alert(data.error);
                     } else {
                         document.getElementById('element-title').innerText = `${data.name} (${data.symbol})`;
@@ -17,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('element-ydiscover').innerText = `Year of Discovery: ${data.ydiscover}`;
                         document.getElementById('element-modal').style.display = 'block';
                     }
+                })
+                .catch(error => {
+                    console.error(`Error fetching details for element ${electron}:`, error);
                 });
         });
     });

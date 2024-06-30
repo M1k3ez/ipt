@@ -1,3 +1,5 @@
+import logging
+from logging.handlers import RotatingFileHandler
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
@@ -7,12 +9,14 @@ from wtforms.validators import DataRequired, Email, Length, Regexp
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
-
 
 app = Flask(__name__)
 
+# Configure logging
+handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.ERROR)
+app.logger.addHandler(handler)
 
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
 app.config.update(
@@ -29,10 +33,8 @@ app.config.update(
     MAIL_DEBUG=False
 )
 
-
 mail = Mail(app)
 db.init_app(app)
-
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[
@@ -61,77 +63,84 @@ class ContactForm(FlaskForm):
     ])
     submit = SubmitField('Send Message')
 
-
 @app.route('/')
 def home():
-    elements = db.session.query(
-        ElementContent.electron,
-        ElementContent.name,
-        ElementContent.symbol,
-        ElementContent.meltingpoint,
-        ElementContent.boilingpoint,
-        ElementContent.furtherinfo,
-        ElementContent.ydiscover,
-        Group.id.label('group'),
-        Period.pid.label('period')
-    ).join(Group, ElementContent.electron == Group.ecid)\
-     .join(Period, ElementContent.electron == Period.ecid).all()
-    elements = [
-        {
-            "electron": element.electron,
-            "name": element.name,
-            "symbol": element.symbol,
-            "meltingpoint": element.meltingpoint,
-            "boilingpoint": element.boilingpoint,
-            "furtherinfo": element.furtherinfo,
-            "ydiscover": element.ydiscover,
-            "group": element.group,
-            "period": element.period
-        }
-        for element in elements
-    ]
-    return render_template("home.html", elements=elements)
-
+    try:
+        elements = db.session.query(
+            ElementContent.electron,
+            ElementContent.name,
+            ElementContent.symbol,
+            ElementContent.meltingpoint,
+            ElementContent.boilingpoint,
+            ElementContent.furtherinfo,
+            ElementContent.ydiscover,
+            Group.id.label('group'),
+            Period.pid.label('period')
+        ).join(Group, ElementContent.electron == Group.ecid)\
+         .join(Period, ElementContent.electron == Period.ecid).all()
+        elements = [
+            {
+                "electron": element.electron,
+                "name": element.name,
+                "symbol": element.symbol,
+                "meltingpoint": element.meltingpoint,
+                "boilingpoint": element.boilingpoint,
+                "furtherinfo": element.furtherinfo,
+                "ydiscover": element.ydiscover,
+                "group": element.group,
+                "period": element.period
+            }
+            for element in elements
+        ]
+        return render_template("home.html", elements=elements)
+    except Exception as e:
+        app.logger.error('Error loading home page', exc_info=e)
+        return render_template('404.html'), 500
 
 @app.route('/element/<int:electron>', methods=['GET'])
 def get_element(electron):
-    element = ElementContent.query.filter_by(electron=electron).first()
-    if element:
-        return jsonify({
-            "electron": element.electron,
-            "name": element.name,
-            "symbol": element.symbol,
-            "enegativity": element.enegativity,
-            "meltingpoint": element.meltingpoint,
-            "boilingpoint": element.boilingpoint,
-            "details": element.furtherinfo,
-            "ydiscover": element.ydiscover
-        })
-    else:
-        return jsonify({"error": "Element not found"}), 404
-
+    try:
+        element = ElementContent.query.filter_by(electron=electron).first()
+        if element:
+            return jsonify({
+                "electron": element.electron,
+                "name": element.name,
+                "symbol": element.symbol,
+                "enegativity": element.enegativity,
+                "meltingpoint": element.meltingpoint,
+                "boilingpoint": element.boilingpoint,
+                "details": element.furtherinfo,
+                "ydiscover": element.ydiscover
+            })
+        else:
+            return jsonify({"error": "Element not found"}), 404
+    except Exception as e:
+        app.logger.error(f'Error fetching details for element {electron}', exc_info=e)
+        return jsonify({"error": "Internal Server Error"}), 500
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        msg = Message(
-            subject=form.subject.data,
-            sender=app.config['MAIL_DEFAULT_SENDER'],
-            recipients=["ipttnoreply@gmail.com"]
-        )
-        msg.reply_to = form.email.data
-        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
-        mail.send(msg)
-        flash('Your message has been sent successfully!', 'success')
-        return redirect(url_for('contact'))
+        try:
+            msg = Message(
+                subject=form.subject.data,
+                sender=app.config['MAIL_DEFAULT_SENDER'],
+                recipients=["ipttnoreply@gmail.com"]
+            )
+            msg.reply_to = form.email.data
+            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+            return redirect(url_for('contact'))
+        except Exception as e:
+            app.logger.error('Error sending email', exc_info=e)
+            flash('Failed to send your message. Please try again later.', 'danger')
     return render_template('contact.html', form=form)
-
 
 @app.route('/404')
 def handlingerror():
     return render_template('404.html')
-
 
 if __name__ == '__main__':
     with app.app_context():
