@@ -7,9 +7,8 @@ html, body {
   flex-direction: column;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(315deg, #ffffff, #d7e1ec);
-  padding-top: 80px; /* Adjust this value based on the height of your navbar */
+  padding-top: 0px;
 }
-
 .content {
   font-family: 'Oswald', sans-serif;
 }
@@ -30,20 +29,20 @@ html, body {
 }
 .navbar {
   font-family: 'Poppins', sans-serif;
-  transition: top 0.3s;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 8%;
+  padding: 10px 8%;
   background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: top 0.3s;
 }
-.navlist{
+.navlist {
   padding-left: 900px;
 }
 .navbar.hidden {
@@ -210,63 +209,100 @@ html, body {
 
 .periodic-table {
   display: grid;
-  grid-template-columns: repeat(18, minmax(50px, 1fr));
-  gap: 10px;
-  padding: 20px;
-  margin: 20px 0;
+  grid-template-columns: 30px repeat(18, minmax(30px, 1fr));
+  grid-template-rows: 30px repeat(11, minmax(30px, 1fr));
+  padding: 10px;
+  margin: 10px 0;
   overflow: hidden;
+}
+
+.group-labels {
+  display: contents;
+}
+
+.group-label {
+  text-align: center;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+.period-labels {
+  display: contents;
+}
+
+.period-label {
+  text-align: right;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 2px 5px;
 }
 
 .element {
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 3px;
+  padding: 5px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
-  margin: 5px; /* Ensure some spacing between elements */
+  margin: 0;
 }
 
 .element:hover {
   transform: scale(1.05);
 }
 
+.element-number {
+  font-size: 8px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  display: block;
+}
+
 .element-symbol {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   color: #4a2196;
+  margin-top: 2px;
 }
 
 .element-name {
-  font-size: 14px;
-  margin-top: 5px;
+  font-size: 8px;
+  margin-top: 2px;
   color: #333;
-}
-
-.element-number {
-  font-size: 12px;
-  margin-top: 5px;
-  color: #777;
+  text-transform: lowercase;
 }
 
 .element-weight {
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 8px;
+  margin-top: 2px;
   color: #777;
 }
 
 .lanthanides {
-  grid-column: 3 / span 15;
-  grid-row: 9;
-}
-
-.actinides {
-  grid-column: 3 / span 15;
+  grid-column: 4 / span 1;
   grid-row: 10;
 }
 
+.actinides {
+  grid-column: 4 / span 1;
+  grid-row: 11;
+}
+
+.lanthanides-label, .actinides-label {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 2px;
+  grid-column: 4 / span 1;
+}
 
 #container {
   border: solid 3px #474544;

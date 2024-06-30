@@ -5,12 +5,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp
 from dotenv import load_dotenv
-from sqlalchemy import cast, Float
 import os
+
 
 load_dotenv()
 
+
 app = Flask(__name__)
+
 
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
 app.config.update(
@@ -26,6 +28,7 @@ app.config.update(
     MAIL_DEFAULT_SENDER=os.getenv('MAIL_DEFAULT_SENDER'),
     MAIL_DEBUG=False
 )
+
 
 mail = Mail(app)
 db.init_app(app)
@@ -50,7 +53,7 @@ class ContactForm(FlaskForm):
     subject = SelectField('Subject', choices=[
         ('Advice', "Advice"),
         ('Questions', "Questions"),
-        ('proposal', "Proposal")
+        ('Proposal', "Proposal")
     ], validators=[DataRequired()])
     message = TextAreaField('Message', validators=[
         DataRequired(),
@@ -90,6 +93,24 @@ def home():
     return render_template("home.html", elements=elements)
 
 
+@app.route('/element/<int:electron>', methods=['GET'])
+def get_element(electron):
+    element = ElementContent.query.filter_by(electron=electron).first()
+    if element:
+        return jsonify({
+            "electron": element.electron,
+            "name": element.name,
+            "symbol": element.symbol,
+            "enegativity": element.enegativity,
+            "meltingpoint": element.meltingpoint,
+            "boilingpoint": element.boilingpoint,
+            "details": element.furtherinfo,
+            "ydiscover": element.ydiscover
+        })
+    else:
+        return jsonify({"error": "Element not found"}), 404
+
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
@@ -100,8 +121,7 @@ def contact():
             recipients=["ipttnoreply@gmail.com"]
         )
         msg.reply_to = form.email.data
-        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n \
-        Phone: {form.telephone.data}\nMessage: {form.message.data}"
+        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
         mail.send(msg)
         flash('Your message has been sent successfully!', 'success')
         return redirect(url_for('contact'))
@@ -111,11 +131,6 @@ def contact():
 @app.route('/404')
 def handlingerror():
     return render_template('404.html')
-
-
-@app.route('/nav')
-def navigabar():
-    return render_template('nav.html')
 
 
 if __name__ == '__main__':
