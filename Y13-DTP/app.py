@@ -1,5 +1,4 @@
-import logging
-from logging.handlers import RotatingFileHandler
+import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
@@ -7,17 +6,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# Configure logging
-handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
-handler.setLevel(logging.ERROR)
-app.logger.addHandler(handler)
-
+# Database configuration
 db_path = os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')
 app.config.update(
     SQLALCHEMY_DATABASE_URI=f'sqlite:///{db_path}',
@@ -93,17 +87,14 @@ def home():
             for element in elements
         ]
         return render_template("home.html", elements=elements)
-    except Exception as e:
-        app.logger.error('Error loading home page', exc_info=e)
+    except Exception:
         return render_template('404.html'), 500
 
-@app.route('/element/<int:electron>', methods=['GET'])
+@app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
-    app.logger.info(f'Received request for element with electron number: {electron}')
     try:
-        element = ElementContent.query.filter_by(electron=electron).first()
+        element = db.session.query(ElementContent).filter_by(electron=electron).first()
         if element:
-            app.logger.info(f'Element found: {element}')
             return jsonify({
                 "electron": element.electron,
                 "name": element.name,
@@ -115,10 +106,8 @@ def get_element(electron):
                 "ydiscover": element.ydiscover
             })
         else:
-            app.logger.warning(f'Element with electron number {electron} not found')
             return jsonify({"error": "Element not found"}), 404
-    except Exception as e:
-        app.logger.error(f'Error fetching details for element {electron}', exc_info=e)
+    except Exception:
         return jsonify({"error": "Internal Server Error"}), 500
 
 
@@ -137,14 +126,15 @@ def contact():
             mail.send(msg)
             flash('Your message has been sent successfully!', 'success')
             return redirect(url_for('contact'))
-        except Exception as e:
-            app.logger.error('Error sending email', exc_info=e)
+        except Exception:
             flash('Failed to send your message. Please try again later.', 'danger')
     return render_template('contact.html', form=form)
+
 
 @app.route('/404')
 def handlingerror():
     return render_template('404.html')
+
 
 if __name__ == '__main__':
     with app.app_context():

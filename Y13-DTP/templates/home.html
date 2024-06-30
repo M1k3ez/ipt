@@ -11,31 +11,45 @@
             <div class="period-label" style="grid-column: 1; grid-row: {{ period + 1 }};">{{ period }}</div>
         {% endfor %}
     </div>
-    <div class="element lanthanides" style="grid-column: 4 / span 1; grid-row: 7;">
-        <div class="element-number">57-71</div>
-        <div class="element-symbol">La</div>
-        <div class="element-name">Lanthanides</div>
-        <div class="element-weight"></div>
+    <div class="element lanthanides" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides">
+        <a href="#" class="element-link" data-id="lanthanides">
+            <div class="element-number">57-71</div>
+            <div class="element-symbol">La</div>
+            <div class="element-name">Lanthanides</div>
+            <div class="element-weight"></div>
+        </a>
     </div>
-    <div class="element actinides" style="grid-column: 4 / span 1; grid-row: 8;">
-        <div class="element-number">89-103</div>
-        <div class="element-symbol">Ac</div>
-        <div class="element-name">Actinides</div>
-        <div class="element-weight"></div>
+    <div class="element actinides" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides">
+        <a href="#" class="element-link" data-id="actinides">
+            <div class="element-number">89-103</div>
+            <div class="element-symbol">Ac</div>
+            <div class="element-name">Actinides</div>
+            <div class="element-weight"></div>
+        </a>
     </div>
     {% for element in elements %}
         {% if 57 <= element.electron <= 71 %}
-            <div class="element lanthanides" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;">
+            <div class="element lanthanides" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}">
+                <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% elif 89 <= element.electron <= 103 %}
-            <div class="element actinides" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;">
+            <div class="element actinides" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}">
+                <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% else %}
-            <div class="element" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};">
+            <div class="element" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}">
+                <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
-                <div class="element-number">{{ element.electron }}</div>
-                <div class="element-symbol">{{ element.symbol }}</div>
-                <div class="element-name">{{ element.name }}</div>
-                <div class="element-weight">{{ element.weight }}</div>
+                    <div class="element-number">{{ element.electron }}</div>
+                    <div class="element-symbol">{{ element.symbol }}</div>
+                    <div class="element-name">{{ element.name }}</div>
+                    <div class="element-weight">{{ element.weight }}</div>
+                </a>
             </div>
     {% endfor %}
+</div>
+<div id="popup" class="popup">
+    <div class="popup-inner">
+        <button id="popup-close" class="popup-close">Close</button>
+        <div id="popup-content"></div>
+    </div>
 </div>
 {% endblock %}
