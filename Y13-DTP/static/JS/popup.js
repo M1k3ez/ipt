@@ -11,7 +11,7 @@ $(document).ready(function() {
                 } else {
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
                     content += '<p>Electron: ' + response.electron + '</p>';
-                    content += '<p>Electro negativity: ' + response.enegativity + '</p>';
+                    content += '<p>Electronegativity: ' + response.enegativity + '</p>';
                     content += '<p>Melting Point: ' + response.meltingpoint + '°C</p>';
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
                     content += '<p>Details: ' + response.details + '</p>';
@@ -26,7 +26,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('#popup-close').click(function() {
         $('#popup').hide();
     });
