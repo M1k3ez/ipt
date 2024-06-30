@@ -99,9 +99,11 @@ def home():
 
 @app.route('/element/<int:electron>', methods=['GET'])
 def get_element(electron):
+    app.logger.info(f'Received request for element with electron number: {electron}')
     try:
         element = ElementContent.query.filter_by(electron=electron).first()
         if element:
+            app.logger.info(f'Element found: {element}')
             return jsonify({
                 "electron": element.electron,
                 "name": element.name,
@@ -113,10 +115,12 @@ def get_element(electron):
                 "ydiscover": element.ydiscover
             })
         else:
+            app.logger.warning(f'Element with electron number {electron} not found')
             return jsonify({"error": "Element not found"}), 404
     except Exception as e:
         app.logger.error(f'Error fetching details for element {electron}', exc_info=e)
         return jsonify({"error": "Internal Server Error"}), 500
+
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
