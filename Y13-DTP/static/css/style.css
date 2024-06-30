@@ -209,8 +209,8 @@ html, body {
 
 .periodic-table {
   display: grid;
-  grid-template-columns: 30px repeat(18, minmax(30px, 1fr));
-  grid-template-rows: 30px repeat(11, minmax(30px, 1fr));
+  grid-template-columns: 30px repeat(18, minmax(1px, 1fr));
+  grid-template-rows: 30px repeat(11, minmax(1px, 1fr));
   padding: 10px;
   margin: 10px 0;
   overflow: hidden;

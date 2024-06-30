@@ -134,9 +134,9 @@ def contact():
     return render_template('contact.html', form=form)
 
 
-@app.route('/404')
-def handlingerror():
-    return render_template('404.html')
+@app.route('/aboutus')
+def aboutus():
+    return render_template('aboutus.html')
 
 
 if __name__ == '__main__':

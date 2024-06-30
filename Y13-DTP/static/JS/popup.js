@@ -10,7 +10,7 @@ $(document).ready(function() {
                     $('#popup-content').html('<p>' + 404 + '</p>');
                 } else {
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
-                    content += '<p>Electron: ' + response.electron + '</p>';
+                    content += '<p>Atomic number: ' + response.electron + '</p>';
                     content += '<p>Electronegativity: ' + response.enegativity + '</p>';
                     content += '<p>Melting Point: ' + response.meltingpoint + '°C</p>';
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
