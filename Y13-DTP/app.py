@@ -190,6 +190,7 @@ def get_element(electron):
         "period": element.period.pname if element.period else None,
         "configuration": config_string,
         "category": category.name if category else None,
+        "categorydescription": category.description if category else None,
     })
 
 
