@@ -249,14 +249,22 @@ html, body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
   margin: 5px;
+  text-decoration: none;
 }
 
+.element a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color */
+}
+.element a:hover {
+  text-decoration: none; /* Remove underline on hover */
+}
 .element:hover {
   transform: scale(1.05);
 }
 
 .element-number {
-  font-size: 8px;
+  font-size: 12px;
   font-weight: bold;
   color: #333;
   text-align: left;
@@ -271,7 +279,7 @@ html, body {
 }
 
 .element-name {
-  font-size: 8px;
+  font-size: 10px;
   margin-top: 2px;
   color: #333;
   text-transform: lowercase;
@@ -467,22 +475,64 @@ textarea {
 }
 /* Add this to the end of style.css */
 
+/* Styles for different categories */
+.category-1 {
+  background-color: #ff9999; /* Example color for category 1 */
+}
+
+.category-2 {
+  background-color: #99ccff; /* Example color for category 2 */
+}
+
+.category-3 {
+  background-color: #99ff99; /* Example color for category 3 */
+}
+
+.category-4 {
+  background-color: #ffff99; /* Example color for category 4 */
+}
+
+.category-5 {
+  background-color: #ffcc99; /* Example color for category 5 */
+}
+
+.category-6 {
+  background-color: #cc99ff; /* Example color for category 6 */
+}
+
+.category-7 {
+  background-color: #ff99cc; /* Example color for category 7 */
+}
+
+.category-8 {
+  background-color: #99ffcc; /* Example color for category 8 */
+}
+
+.category-9 {
+  background-color: #ccff99; /* Example color for category 9 */
+}
+
+.category-10 {
+  background-color: #9999ff; /* Example color for category 10 */
+}
+
 /* Styles for different states at 0 degrees Celsius */
 .solid {
-  border: 3px double black; /* Double solid line for solids */
+  border: 3px double currentColor; /* Double solid line for solids */
 }
 
 .liquid {
-  border: 3px solid #000; /* Single solid line for liquids */
+  border: 3px solid currentColor; /* Single solid line for liquids */
 }
 
 .gas {
-  border: 3px dashed red; /* Broken line for gases */
+  border: 3px dashed currentColor; /* Broken line for gases */
 }
 
 .unknown {
-  border: 3px dotted gray; /* Dotted line for unknown states */
+  border: 3px dotted currentColor; /* Dotted line for unknown states */
 }
+
 
 
 @media screen and (max-width: 768px) {

@@ -145,9 +145,11 @@ def home():
             ElementContent.furtherinfo,
             ElementContent.ydiscover,
             Group.id.label('group'),
-            Period.pid.label('period')
+            Period.pid.label('period'),
+            Category.id.label('category_id')
         ).join(Group, ElementContent.electron == Group.ecid)\
-         .join(Period, ElementContent.electron == Period.ecid).all()
+         .join(Period, ElementContent.electron == Period.ecid)\
+         .join(Category, ElementContent.electron == Category.ecid).all()
         elements = [
             {
                 "electron": element.electron,
@@ -159,6 +161,7 @@ def home():
                 "ydiscover": element.ydiscover,
                 "group": element.group,
                 "period": element.period,
+                "category_id": element.category_id,
                 "state": determine_state_at_zero(element)
             }
             for element in elements
@@ -167,6 +170,7 @@ def home():
     except Exception as e:
         print(f"Error: {e}")
         return render_template('404.html'), 500
+
 
 
 
