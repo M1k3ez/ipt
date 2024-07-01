@@ -16,6 +16,9 @@ $(document).ready(function() {
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
                     content += '<p>Year of Discovery: ' + response.ydiscover + '</p>';
                     content += '<p>Electron Configuration: ' + response.configuration + '</p>';
+                    if (response.category) {
+                        content += '<p>Category: ' + response.category + '</p>';
+                    }
                     $('#popup-content').html(content);
                 }
                 $('.popup').addClass('active');
@@ -26,7 +29,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('.popup .close-btn').click(function() {
         $('.popup').removeClass('active');
     });

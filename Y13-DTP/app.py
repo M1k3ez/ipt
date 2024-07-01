@@ -63,7 +63,6 @@ def calculate_electron_configuration(atomic_number):
     subshells = db.session.query(Subshell).order_by(Subshell.id).all()
     configuration = []
     electrons_remaining = atomic_number
-
     for subshell in subshells:
         if electrons_remaining <= 0:
             break
@@ -78,7 +77,6 @@ def calculate_electron_configuration(atomic_number):
         }
         configuration.append(config)
         electrons_remaining -= electrons_in_subshell
-
     final_configuration = {}
     for config in configuration:
         subshell_id = config['subshell_id']
@@ -91,7 +89,6 @@ def calculate_electron_configuration(atomic_number):
                         final_configuration[subshell_id][key] = config[key]
         else:
             final_configuration[subshell_id] = config
-
     config_string = ""
     for config in final_configuration.values():
         for subshell in ['s', 'p', 'd', 'f']:
@@ -162,6 +159,7 @@ def home():
 def get_element(electron):
     try:
         element = db.session.query(ElementContent).filter_by(electron=electron).first()
+        category = db.session.query(Category).filter_by(ecid=electron).first()
         if element:
             configuration, config_string = calculate_electron_configuration(electron)
             store_electron_configuration(element.electron, configuration)
@@ -174,14 +172,14 @@ def get_element(electron):
                 "boilingpoint": element.boilingpoint,
                 "details": element.furtherinfo,
                 "ydiscover": element.ydiscover,
-                "configuration": config_string
+                "configuration": config_string,
+                "category": category.name if category else None,
             })
         else:
             return jsonify({"error": "Element not found"}), 404
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
-
 
 
 

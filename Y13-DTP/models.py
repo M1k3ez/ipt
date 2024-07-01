@@ -38,6 +38,8 @@ class ElementContent(Base):
     group = db.relationship('Group', back_populates='element_content', uselist=False)
     period = db.relationship('Period', back_populates='element_content', uselist=False)
     electroncfgs = db.relationship('ElectronCfg', back_populates='element')
+    category = db.relationship('Category', back_populates='element_content', uselist=False)
+
 
 class Group(Base):
     __tablename__ = 'Group'
@@ -59,3 +61,4 @@ class Category(Base):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     ecid = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
+    element_content = db.relationship('ElementContent', back_populates='category')
