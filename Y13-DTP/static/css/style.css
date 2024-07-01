@@ -113,7 +113,6 @@ html, body {
   background-color: #333;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
 .navbar nav a:before, .navbar nav a:after {
   content: '';
   position: absolute;
@@ -123,45 +122,38 @@ html, body {
   box-sizing: border-box;
   transition: all 0.3s ease-in-out;
 }
-
 .navbar nav a:before {
   top: -6px;
   left: -6px;
   border-width: 2px 0 0 2px;
 }
-
 .navbar nav a:after {
   bottom: -6px;
   right: -6px;
   border-width: 0 2px 2px 0;
 }
-
 .navbar nav a:hover:before, .navbar nav a:hover:after {
   width: calc(100% + 12px);
   height: calc(100% + 12px);
   border-color: #000;
 }
-
 .footer {
   padding: 2px 1px;
   text-align: center;
   background-color: #4a2196;
   width: 100%;
 }
-
 .footer-text {
   color: white;
   padding: 1px 0;
   font-size: 12px;
   line-height: 1.1em;
 }
-
 .footer .wrapper {
   display: inline-flex;
   list-style: none;
   padding: 0;
 }
-
 .footer .icon {
   border-radius: 50%;
   padding: 15px;
@@ -176,59 +168,45 @@ html, body {
   transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   color: #fff;
 }
-
 .footer .icon.facebook {
   background: #1877F2;
 }
-
 .footer .icon.twitter {
   background: #1DA1F2;
 }
-
 .footer .icon.instagram {
   background: #E4405F;
 }
-
 .footer .icon.github {
   background: #333333;
 }
-
 .footer .icon.youtube {
   background: #CD201F;
 }
-
 .footer .icon:hover {
   transform: scale(1.1);
 }
-
 .footer .icon.facebook:hover {
   background: darken(#1877F2, 10%);
 }
-
 .footer .icon.twitter:hover {
   background: darken(#1DA1F2, 10%);
 }
-
 .footer .icon.instagram:hover {
   background: darken(#E4405F, 10%);
 }
-
 .footer .icon.github:hover {
   background: darken(#333333, 10%);
 }
-
 .footer .icon.youtube:hover {
   background: darken(#CD201F, 10%);
 }
-
 .footer-copyright {
   padding: 1px 0;
   font-size: 12px;
   margin-top: 2px;
   color: white;
 }
-
-
 .periodic-table {
   display: grid;
   grid-template-columns: 30px repeat(18, minmax(1px, 1fr));
@@ -261,7 +239,6 @@ html, body {
   text-align: center;
   padding-right: 10px;
 }
-
 .element {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -274,18 +251,16 @@ html, body {
   margin: 5px;
   text-decoration: none;
 }
-
 .element a {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit text color */
+  text-decoration: none;
+  color: inherit; 
 }
 .element a:hover {
-  text-decoration: none; /* Remove underline on hover */
+  text-decoration: none;
 }
 .element:hover {
   transform: scale(1.05);
 }
-
 .element-number {
   font-size: 12px;
   font-weight: bold;
@@ -293,37 +268,31 @@ html, body {
   text-align: left;
   display: block;
 }
-
 .element-symbol {
   font-size: 14px;
   font-weight: bold;
   color: #4a2196;
   margin-top: 2px;
 }
-
 .element-name {
   font-size: 10px;
   margin-top: 2px;
   color: #333;
   text-transform: lowercase;
 }
-
 .element-weight {
   font-size: 8px;
   margin-top: 2px;
   color: #777;
 }
-
 .lanthanides {
   grid-column: 4 / span 1;
   grid-row: 10;
 }
-
 .actinides {
   grid-column: 4 / span 1;
   grid-row: 11;
 }
-
 .lanthanides-label, .actinides-label {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -335,7 +304,6 @@ html, body {
   margin: 2px;
   grid-column: 4 / span 1;
 }
-
 #container {
   border: solid 3px #fff;
   padding-top: 18px;
@@ -343,12 +311,10 @@ html, body {
   margin: 60px auto;
   position: relative;
 }
-
 form {
   padding: 37.5px;
   margin: 50px 0;
 }
-
 h1 {
   color: #fff;
   font-size: 32px;
@@ -357,14 +323,12 @@ h1 {
   text-align: center;
   text-transform: uppercase;
 }
-
 .underline {
   border-bottom: solid 2px #fff;
   padding-top: 10px;
   margin: -0.512em auto;
   width: 80px;
 }
-
 input[type='text'], input[type='email'], select, textarea {
   background: none;
   border: none;
@@ -380,21 +344,17 @@ input[type='text'], input[type='email'], select, textarea {
   box-sizing: border-box;
   transition: all 0.3s;
 }
-
 input[type='text']:focus, input[type='email']:focus, textarea:focus {
   outline: none;
 }
-
 textarea {
   line-height: 150%;
   height: 150px;
   resize: none;
 }
-
 ::placeholder {
   color: #fff;
 }
-
 #form_button {
   background: none;
   border: solid 2px #fff;
@@ -455,21 +415,18 @@ textarea {
 .image404 {
   max-width: 100%;
   height: auto;
-  margin-bottom: 20px;
 }
 
 .text404 {
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 350px;
 }
 
 .text404 li {
   list-style: none;
   font-size: 1.5em;
-  margin-bottom: 10px;
 }
 
 .button {
