@@ -18,8 +18,8 @@ $(document).ready(function() {
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
                     content += '<p>Atomic number: ' + response.electron + '</p>';
                     content += '<p>Electronegativity: ' + response.enegativity + '</p>';
-                    content += '<p>Melting Point: ' + response.meltingpoint + '°C</p>';
-                    content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
+                    content += '<p>Melting Point: ' + response.meltingpoint + '°K</p>';
+                    content += '<p>Boiling Point: ' + response.boilingpoint + '°K</p>';
                     content += '<p>Year of Discovery: ' + response.ydiscover + '</p>';
                     content += '<p>Electron Configuration: ' + response.configuration + '</p>';
                     if (response.category) {

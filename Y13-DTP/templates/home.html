@@ -1,6 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="temperature-control">
+    <label for="temperature-slider">Temperature (K):</label>
+    <input type="range" id="temperature-slider" name="temperature-slider" min="-273" max="7000" value="273" oninput="updateTemperature(this.value)">
+    <span id="temperature-value">273 K</span>
+    <button id="reset-temperature" onclick="resetTemperature()">Reset to STP</button>
+</div>
 <div class="periodic-table">
+    <div class="corner-label">
+        <div class="horizontal-label">Group</div>
+        <div class="vertical-label">Period</div>
+    </div>
     <div class="group-labels">
         {% for group in range(1, 19) %}
             <div class="group-label" style="grid-column: {{ group + 1 }}; grid-row: 1;">{{ group }}</div>
@@ -30,13 +40,13 @@
     {% for element in elements %}
         {% set category_class = 'category-' ~ element.category_id %}
         {% if 57 <= element.electron <= 71 %}
-            <div class="element lanthanides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}">
+            <div class="element lanthanides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% elif 89 <= element.electron <= 103 %}
-            <div class="element actinides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}">
+            <div class="element actinides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% else %}
-            <div class="element {{ element.state }} {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}">
+            <div class="element {{ element.state }} {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
                     <div class="element-number">{{ element.electron }}</div>
@@ -47,27 +57,25 @@
             </div>
     {% endfor %}
 </div>
-
 <div class="legend">
-    <div class="legend-title">Key:</div>
+    <div class="legend-title">Key</div>
     <div class="legend-table">
-        <div class="legend-cell category-1">Alkali metals</div>
-        <div class="legend-cell category-2">Alkaline earth metals</div>
-        <div class="legend-cell category-3">Lanthanoids</div>
-        <div class="legend-cell category-4">Actinoids</div>
-        <div class="legend-cell category-5">Transition metals</div>
-        <div class="legend-cell category-6">Post-transition metals</div>
-        <div class="legend-cell category-7">Metalloids</div>
-        <div class="legend-cell category-8">Other nonmetals</div>
-        <div class="legend-cell category-9">Noble gases</div>
-        <div class="legend-cell category-10">Unknown</div>
+        <div class="legend-cell category-2">Alkali metals</div>
+        <div class="legend-cell category-3">Alkaline earth metals</div>
+        <div class="legend-cell category-9">Lanthanoids</div>
+        <div class="legend-cell category-10">Actinoids</div>
+        <div class="legend-cell category-4">Transition metals</div>
+        <div class="legend-cell category-5">Post-transition metals</div>
+        <div class="legend-cell category-6">Metalloids</div>
+        <div class="legend-cell category-1">Other nonmetals</div>
+        <div class="legend-cell category-8">Noble gases</div>
+        <div class="legend-cell category-7">Unknown</div>
         <div class="legend-cell solid">Solid</div>
         <div class="legend-cell liquid">Liquid</div>
         <div class="legend-cell gas">Gas</div>
         <div class="legend-cell unknown">Unknown</div>
     </div>
 </div>
-
 <div class="popup-container">
     <div id="popup" class="popup">
         <div class="close-btn">&times;</div>
