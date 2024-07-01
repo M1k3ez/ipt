@@ -175,28 +175,30 @@ def home():
 def get_element(electron):
     try:
         element = db.session.query(ElementContent).filter_by(electron=electron).first()
-        category = db.session.query(Category).filter_by(ecid=electron).first()
-        if element:
-            configuration, config_string = calculate_electron_configuration(electron)
-            store_electron_configuration(element.electron, configuration)
-            return jsonify({
-                "electron": element.electron,
-                "name": element.name,
-                "symbol": element.symbol,
-                "enegativity": element.enegativity,
-                "meltingpoint": element.meltingpoint,
-                "boilingpoint": element.boilingpoint,
-                "details": element.furtherinfo,
-                "ydiscover": element.ydiscover,
-                "group": element.group,
-                "period": element.period,
-                "configuration": config_string,
-                "category": category.name if category else None,
-            })
-        else:
+        if not element:
             return jsonify({"error": "Element not found"}), 404
+        
+        category = db.session.query(Category).filter_by(ecid=electron).first()
+        
+        configuration, config_string = calculate_electron_configuration(electron)
+        store_electron_configuration(element.electron, configuration)
+        
+        return jsonify({
+            "electron": element.electron,
+            "name": element.name,
+            "symbol": element.symbol,
+            "enegativity": element.enegativity,
+            "meltingpoint": element.meltingpoint,
+            "boilingpoint": element.boilingpoint,
+            "details": element.furtherinfo,
+            "ydiscover": element.ydiscover,
+            "group": element.group.name if element.group else None,
+            "period": element.period.pname if element.period else None,
+            "configuration": config_string,
+            "category": category.name if category else None,
+        })
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error: {e.__class__.__name__} - {e}")
         return jsonify({"error": "Internal Server Error"}), 500
 
 
