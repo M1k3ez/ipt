@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ element.name }} | Electron Configuration</title>
+</head>
+<body>
+    <h1>{{ element.name }} ({{ element.symbol }})</h1>
+    <p>Electron Configuration: {{ configuration|safe }}</p> <!-- Use |safe to render HTML tags -->
+    <p>Electrons: {{ element.electron }}</p>
+    <p>Electronegativity: {{ element.enegativity }}</p>
+    <p>Melting Point: {{ element.meltingpoint }}</p>
+    <p>Boiling Point: {{ element.boilingpoint }}</p>
+    <p>Further Info: {{ element.furtherinfo }}</p>
+    <p>Year Discovered: {{ element.ydiscover }}</p>
+</body>
+</html>

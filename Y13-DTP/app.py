@@ -98,9 +98,6 @@ def calculate_electron_configuration(atomic_number):
     return final_configuration, config_string.strip()
 
 
-
-
-
 def store_electron_configuration(element_id, configuration):
     db.session.query(ElectronCfg).filter_by(element_id=element_id).delete()
     for subshell_id, config in configuration.items():
@@ -117,6 +114,22 @@ def store_electron_configuration(element_id, configuration):
     db.session.commit()
 
 
+def determine_state_at_zero(element):
+    try:
+        meltingpoint = int(element.meltingpoint) if element.meltingpoint != 'N/A' else None
+        boilingpoint = int(element.boilingpoint) if element.boilingpoint != 'N/A' else None
+    except ValueError:
+        return "unknown"
+    if meltingpoint is None:
+        return "unknown"
+    elif boilingpoint is None:
+        return "solid" if meltingpoint > 273 else "liquid"
+    elif meltingpoint > 273:
+        return "solid"
+    elif meltingpoint <= 273 and boilingpoint > 273:
+        return "liquid"
+    else:
+        return "gas"
 
 
 
@@ -145,7 +158,8 @@ def home():
                 "furtherinfo": element.furtherinfo,
                 "ydiscover": element.ydiscover,
                 "group": element.group,
-                "period": element.period
+                "period": element.period,
+                "state": determine_state_at_zero(element)
             }
             for element in elements
         ]
@@ -153,6 +167,7 @@ def home():
     except Exception as e:
         print(f"Error: {e}")
         return render_template('404.html'), 500
+
 
 
 @app.route('/<int:electron>', methods=['GET'])

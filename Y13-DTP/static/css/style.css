@@ -212,7 +212,7 @@ html, body {
   grid-template-columns: 30px repeat(18, minmax(1px, 1fr));
   grid-template-rows: 30px repeat(11, minmax(1px, 1fr));
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px;
   overflow: hidden;
 }
 
@@ -248,7 +248,7 @@ html, body {
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
-  margin: 0;
+  margin: 5px;
 }
 
 .element:hover {
@@ -465,6 +465,25 @@ textarea {
   color: white;
   text-decoration: none;
 }
+/* Add this to the end of style.css */
+
+/* Styles for different states at 0 degrees Celsius */
+.solid {
+  border: 3px double black; /* Double solid line for solids */
+}
+
+.liquid {
+  border: 3px solid #000; /* Single solid line for liquids */
+}
+
+.gas {
+  border: 3px dashed red; /* Broken line for gases */
+}
+
+.unknown {
+  border: 3px dotted gray; /* Dotted line for unknown states */
+}
+
 
 @media screen and (max-width: 768px) {
   #container {
