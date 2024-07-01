@@ -22,6 +22,8 @@ $(document).ready(function() {
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°K</p>';
                     content += '<p>Year of Discovery: ' + response.ydiscover + '</p>';
                     content += '<p>Electron Configuration: ' + response.configuration + '</p>';
+                    content += '<p>Group: ' + response.group + '</p>';
+                    content += '<p>Period: ' + response.period + '</p>';
                     if (response.category) {
                         content += '<p>Category: ' + response.category + '</p>';
                     }

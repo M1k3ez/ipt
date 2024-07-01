@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category, Subshell, ElectronCfg
 from flask_wtf import FlaskForm
@@ -94,7 +94,6 @@ def calculate_electron_configuration(atomic_number):
         for subshell in ['s', 'p', 'd', 'f']:
             if subshell in config and config[subshell] > 0:
                 config_string += f"{config['pqn']}{subshell}<sup>{config[subshell]}</sup> "
-
     return final_configuration, config_string.strip()
 
 
@@ -130,7 +129,6 @@ def determine_state_at_zero(element):
         return "liquid"
     else:
         return "gas"
-
 
 
 @app.route('/')
@@ -173,7 +171,6 @@ def home():
 
 
 
-
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
     try:
@@ -191,6 +188,8 @@ def get_element(electron):
                 "boilingpoint": element.boilingpoint,
                 "details": element.furtherinfo,
                 "ydiscover": element.ydiscover,
+                "group": element.group,
+                "period": element.period,
                 "configuration": config_string,
                 "category": category.name if category else None,
             })
