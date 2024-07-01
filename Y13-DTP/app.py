@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
-from models import db, ElementContent, Group, Period, Category
+from models import db, ElementContent, Group, Period, Category, Subshell, ElectronCfg
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp
@@ -59,6 +59,19 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Send Message')
 
 
+def calculate_electron_configuration(atomic_number):
+    subshells = db.session.query(Subshell).order_by(Subshell.id).all()
+    configuration = []
+    electrons_remaining = atomic_number
+    for subshell in subshells:
+        if electrons_remaining <= 0:
+            break
+        electrons_in_subshell = min(electrons_remaining, subshell.maxelectrons)
+        configuration.append(f"{subshell.subshells}{electrons_in_subshell}")
+        electrons_remaining -= electrons_in_subshell
+    return " ".join(configuration)
+
+
 @app.route('/')
 def home():
     try:
@@ -89,7 +102,8 @@ def home():
             for element in elements
         ]
         return render_template("home.html", elements=elements)
-    except Exception:
+    except Exception as e:
+        print(f"Error: {e}")
         return render_template('404.html'), 500
 
 
@@ -98,6 +112,7 @@ def get_element(electron):
     try:
         element = db.session.query(ElementContent).filter_by(electron=electron).first()
         if element:
+            configuration = calculate_electron_configuration(electron)
             return jsonify({
                 "electron": element.electron,
                 "name": element.name,
@@ -106,11 +121,13 @@ def get_element(electron):
                 "meltingpoint": element.meltingpoint,
                 "boilingpoint": element.boilingpoint,
                 "details": element.furtherinfo,
-                "ydiscover": element.ydiscover
+                "ydiscover": element.ydiscover,
+                "configuration": configuration
             })
         else:
             return jsonify({"error": "Element not found"}), 404
-    except Exception:
+    except Exception as e:
+        print(f"Error: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
 
 
@@ -137,6 +154,19 @@ def contact():
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
+
+
+@app.route('/electron_configuration/<int:atomic_number>', methods=['GET'])
+def electron_configuration(atomic_number):
+    try:
+        configuration = calculate_electron_configuration(atomic_number)
+        return jsonify({
+            "atomic_number": atomic_number,
+            "electron_configuration": configuration
+        })
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 
 if __name__ == '__main__':

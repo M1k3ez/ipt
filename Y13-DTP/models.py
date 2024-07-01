@@ -1,18 +1,32 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, relationship
+from sqlalchemy.orm import declarative_base, relationship
 
-class Base(DeclarativeBase):
-    pass
-
+Base = declarative_base()
+pass
 db = SQLAlchemy(model_class=Base)
 
-class Group(Base):
-    __tablename__ = 'Group'
-    id = db.Column(db.Integer, primary_key=True)
-    ecid = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
-    name = db.Column(db.String, nullable=False)
+class Subshell(Base):
+    __tablename__ = 'subshell'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    subshells = db.Column(db.String, nullable=False, unique=True)
+    maxelectrons = db.Column(db.Integer, nullable=False)
+    
+    elements = db.relationship('ElectronCfg', back_populates='subshell')
 
-    element_content = db.relationship('ElementContent', back_populates='group')
+
+class ElectronCfg(Base):
+    __tablename__ = 'electroncfg'
+    id = db.Column(db.Integer, primary_key=True)
+    element_id = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
+    subshell_id = db.Column(db.Integer, db.ForeignKey('subshell.id'), nullable=False)
+    pqn = db.Column(db.Integer, nullable=False)
+    smax = db.Column(db.Integer, nullable=True)
+    pmax = db.Column(db.Integer, nullable=True)
+    dmax = db.Column(db.Integer, nullable=True)
+    fmax = db.Column(db.Integer, nullable=True)
+    
+    element = db.relationship('ElementContent', back_populates='subshells')
+    subshell = db.relationship('Subshell', back_populates='elements')
 
 
 class ElementContent(Base):
@@ -27,13 +41,21 @@ class ElementContent(Base):
     ydiscover = db.Column(db.Integer, nullable=True)
     group = db.relationship('Group', back_populates='element_content', uselist=False)
     period = db.relationship('Period', back_populates='element_content', uselist=False)
-    subshells = db.relationship('Subshell', secondary='electroncfg', back_populates='elements')
+    subshells = db.relationship('ElectronCfg', back_populates='element')
+
+
+class Group(Base):
+    __tablename__ = 'Group'
+    id = db.Column(db.Integer, primary_key=True)
+    ecid = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    element_content = db.relationship('ElementContent', back_populates='group')
 
 
 class Period(Base):
     __tablename__ = 'Period'
     pid = db.Column(db.Integer, primary_key=True)
-    ecid = db.Column(db.String, db.ForeignKey('ElementContent.electron'), nullable=False)
+    ecid = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
     pname = db.Column(db.String, nullable=False)
     element_content = db.relationship('ElementContent', back_populates='period')
 
@@ -43,24 +65,4 @@ class Category(Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    ecid = db.Column(db.Integer, nullable=False)
-
-
-class Subshell(Base):
-    __tablename__ = 'Subshell'
-    id = db.Column(db.Integer, primary_key=True)
-    subshell = db.Column(db.String, nullable=False)
-    max_electrons = db.Column(db.Integer, nullable=False)  
-    elements = db.relationship('ElementContent', secondary='electroncfg', back_populates='subshells')
-
-
-class ElectronCfg(Base):
-    __tablename__ = 'electroncfg'
-    id = db.Column(db.Integer, primary_key=True)
-    pqn = db.Column(db.Integer)
-    smax = db.Column(db.Integer)
-    pmax = db.Column(db.Integer)
-    dmax = db.Column(db.Integer)
-    fmax = db.Column(db.Integer)
-    element_id = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'))
-    subshell_id = db.Column(db.Integer, db.ForeignKey('Subshell.id'))
+    ecid = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
