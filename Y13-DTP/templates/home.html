@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="temperature-control">
+    <a>Drag and drop to modify temperature and element's state</a>
     <label for="temperature-slider">Temperature (K):</label>
     <input type="range" id="temperature-slider" name="temperature-slider" min="-273" max="7000" value="273" oninput="updateTemperature(this.value)">
     <span id="temperature-value">273 K</span>

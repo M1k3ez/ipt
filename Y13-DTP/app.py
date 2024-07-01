@@ -93,7 +93,8 @@ def calculate_electron_configuration(atomic_number):
     for config in final_configuration.values():
         for subshell in ['s', 'p', 'd', 'f']:
             if subshell in config and config[subshell] > 0:
-                config_string += f"{config['pqn']}{subshell}<sup>{config[subshell]}</sup> "
+                config_string += f"{config['pqn']}{subshell}\
+                    <sup>{config[subshell]}</sup> "
     return final_configuration, config_string.strip()
 
 
@@ -115,8 +116,10 @@ def store_electron_configuration(element_id, configuration):
 
 def determine_state_at_zero(element):
     try:
-        meltingpoint = int(element.meltingpoint) if element.meltingpoint != 'N/A' else None
-        boilingpoint = int(element.boilingpoint) if element.boilingpoint != 'N/A' else None
+        meltingpoint = int(element.meltingpoint)\
+            if element.meltingpoint != 'N/A' else None
+        boilingpoint = int(element.boilingpoint)\
+            if element.boilingpoint != 'N/A' else None
     except ValueError:
         return "unknown"
     if meltingpoint is None:
@@ -133,100 +136,94 @@ def determine_state_at_zero(element):
 
 @app.route('/')
 def home():
-    try:
-        elements = db.session.query(
-            ElementContent.electron,
-            ElementContent.name,
-            ElementContent.symbol,
-            ElementContent.meltingpoint,
-            ElementContent.boilingpoint,
-            ElementContent.furtherinfo,
-            ElementContent.ydiscover,
-            Group.id.label('group'),
-            Period.pid.label('period'),
-            Category.id.label('category_id')
-        ).join(Group, ElementContent.electron == Group.ecid)\
-         .join(Period, ElementContent.electron == Period.ecid)\
-         .join(Category, ElementContent.electron == Category.ecid).all()
-        elements = [
-            {
-                "electron": element.electron,
-                "name": element.name,
-                "symbol": element.symbol,
-                "meltingpoint": element.meltingpoint,
-                "boilingpoint": element.boilingpoint,
-                "furtherinfo": element.furtherinfo,
-                "ydiscover": element.ydiscover,
-                "group": element.group,
-                "period": element.period,
-                "category_id": element.category_id,
-                "state": determine_state_at_zero(element)
-            }
-            for element in elements
-        ]
-        return render_template("home.html", elements=elements)
-    except Exception as e:
-        print(f"Error: {e}")
-        return render_template('404.html'), 500
-
+    elements = db.session.query(
+        ElementContent.electron,
+        ElementContent.name,
+        ElementContent.symbol,
+        ElementContent.meltingpoint,
+        ElementContent.boilingpoint,
+        ElementContent.furtherinfo,
+        ElementContent.ydiscover,
+        Group.id.label('group'),
+        Period.pid.label('period'),
+        Category.id.label('category_id')
+    ).join(Group, ElementContent.electron == Group.ecid)\
+     .join(Period, ElementContent.electron == Period.ecid)\
+     .join(Category, ElementContent.electron == Category.ecid).all()
+    elements = [
+        {
+            "electron": element.electron,
+            "name": element.name,
+            "symbol": element.symbol,
+            "meltingpoint": element.meltingpoint,
+            "boilingpoint": element.boilingpoint,
+            "furtherinfo": element.furtherinfo,
+            "ydiscover": element.ydiscover,
+            "group": element.group,
+            "period": element.period,
+            "category_id": element.category_id,
+            "state": determine_state_at_zero(element)
+        }
+        for element in elements
+    ]
+    return render_template("home.html", elements=elements)
 
 
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
-    try:
-        element = db.session.query(ElementContent).filter_by(electron=electron).first()
-        if not element:
-            return jsonify({"error": "Element not found"}), 404
-        
-        category = db.session.query(Category).filter_by(ecid=electron).first()
-        
-        configuration, config_string = calculate_electron_configuration(electron)
-        store_electron_configuration(element.electron, configuration)
-        
-        return jsonify({
-            "electron": element.electron,
-            "name": element.name,
-            "symbol": element.symbol,
-            "enegativity": element.enegativity,
-            "meltingpoint": element.meltingpoint,
-            "boilingpoint": element.boilingpoint,
-            "details": element.furtherinfo,
-            "ydiscover": element.ydiscover,
-            "group": element.group.name if element.group else None,
-            "period": element.period.pname if element.period else None,
-            "configuration": config_string,
-            "category": category.name if category else None,
-        })
-    except Exception as e:
-        print(f"Error: {e.__class__.__name__} - {e}")
-        return jsonify({"error": "Internal Server Error"}), 500
-
-
+    element = db.session.query(ElementContent).filter_by(electron=electron).first()
+    if not element:
+        return jsonify({"error": "Element not found"}), 404
+    category = db.session.query(Category).filter_by(ecid=electron).first()
+    configuration, config_string = calculate_electron_configuration(electron)
+    store_electron_configuration(element.electron, configuration)
+    return jsonify({
+        "electron": element.electron,
+        "name": element.name,
+        "symbol": element.symbol,
+        "enegativity": element.enegativity,
+        "meltingpoint": element.meltingpoint,
+        "boilingpoint": element.boilingpoint,
+        "details": element.furtherinfo,
+        "ydiscover": element.ydiscover,
+        "group": element.group.name if element.group else None,
+        "period": element.period.pname if element.period else None,
+        "configuration": config_string,
+        "category": category.name if category else None,
+    })
 
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        try:
-            msg = Message(
-                subject=form.subject.data,
-                sender=app.config['MAIL_DEFAULT_SENDER'],
-                recipients=["ipttnoreply@gmail.com"]
-            )
-            msg.reply_to = form.email.data
-            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
-            mail.send(msg)
-            flash('Your message has been sent successfully!', 'success')
-            return redirect(url_for('contact'))
-        except Exception:
-            flash('Failed to send your message. Please try again later.', 'danger')
+        msg = Message(
+            subject=form.subject.data,
+            sender=app.config['MAIL_DEFAULT_SENDER'],
+            recipients=["ipttnoreply@gmail.com"]
+        )
+        msg.reply_to = form.email.data
+        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\
+            \nPhone: {form.telephone.data}\\nMessage: {form.message.data}"
+        mail.send(msg)
+        flash('Your message has been sent successfully!', 'success')
+        return redirect(url_for('contact'))
     return render_template('contact.html', form=form)
 
 
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template('404.html'), 500
 
 
 if __name__ == '__main__':
