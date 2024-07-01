@@ -63,13 +63,40 @@ def calculate_electron_configuration(atomic_number):
     subshells = db.session.query(Subshell).order_by(Subshell.id).all()
     configuration = []
     electrons_remaining = atomic_number
+
     for subshell in subshells:
         if electrons_remaining <= 0:
             break
         electrons_in_subshell = min(electrons_remaining, subshell.maxelectrons)
-        configuration.append(f"{subshell.subshells}{electrons_in_subshell}")
+        configuration.append({
+            'subshell_id': subshell.id,
+            'electrons': electrons_in_subshell,
+            'pqn': subshell.id,  # Assuming `pqn` is the primary key or related to subshell.id
+            's': electrons_in_subshell if subshell.subshells.startswith('s') else None,
+            'p': electrons_in_subshell if subshell.subshells.startswith('p') else None,
+            'd': electrons_in_subshell if subshell.subshells.startswith('d') else None,
+            'f': electrons_in_subshell if subshell.subshells.startswith('f') else None
+        })
         electrons_remaining -= electrons_in_subshell
-    return " ".join(configuration)
+
+    return configuration
+
+
+def store_electron_configuration(element_id, configuration):
+    # Delete existing configurations for the element
+    db.session.query(ElectronCfg).filter_by(element_id=element_id).delete()
+    for config in configuration:
+        electron_cfg = ElectronCfg(
+            element_id=element_id,
+            subshell_id=config['subshell_id'],
+            pqn=config['pqn'],
+            s=config['s'],
+            p=config['p'],
+            d=config['d'],
+            f=config['f']
+        )
+        db.session.add(electron_cfg)
+    db.session.commit()
 
 
 @app.route('/')
@@ -113,6 +140,7 @@ def get_element(electron):
         element = db.session.query(ElementContent).filter_by(electron=electron).first()
         if element:
             configuration = calculate_electron_configuration(electron)
+            store_electron_configuration(element.electron, configuration)
             return jsonify({
                 "electron": element.electron,
                 "name": element.name,
@@ -160,10 +188,15 @@ def aboutus():
 def electron_configuration(atomic_number):
     try:
         configuration = calculate_electron_configuration(atomic_number)
-        return jsonify({
-            "atomic_number": atomic_number,
-            "electron_configuration": configuration
-        })
+        element = db.session.query(ElementContent).filter_by(electron=atomic_number).first()
+        if element:
+            store_electron_configuration(element.electron, configuration)
+            return jsonify({
+                "atomic_number": atomic_number,
+                "electron_configuration": configuration
+            })
+        else:
+            return jsonify({"error": "Element not found"}), 404
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "Internal Server Error"}), 500

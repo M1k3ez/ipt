@@ -2,7 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
-pass
 db = SQLAlchemy(model_class=Base)
 
 class Subshell(Base):
@@ -16,16 +15,15 @@ class Subshell(Base):
 
 class ElectronCfg(Base):
     __tablename__ = 'electroncfg'
-    id = db.Column(db.Integer, primary_key=True)
-    element_id = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), nullable=False)
-    subshell_id = db.Column(db.Integer, db.ForeignKey('subshell.id'), nullable=False)
     pqn = db.Column(db.Integer, nullable=False)
-    smax = db.Column(db.Integer, nullable=True)
-    pmax = db.Column(db.Integer, nullable=True)
-    dmax = db.Column(db.Integer, nullable=True)
-    fmax = db.Column(db.Integer, nullable=True)
+    s = db.Column(db.Integer, nullable=True)
+    p = db.Column(db.Integer, nullable=True)
+    d = db.Column(db.Integer, nullable=True)
+    f = db.Column(db.Integer, nullable=True)
+    element_id = db.Column(db.Integer, db.ForeignKey('ElementContent.electron'), primary_key=True, nullable=False)
+    subshell_id = db.Column(db.Integer, db.ForeignKey('subshell.id'), primary_key=True, nullable=False)
     
-    element = db.relationship('ElementContent', back_populates='subshells')
+    element = db.relationship('ElementContent', back_populates='electroncfgs')
     subshell = db.relationship('Subshell', back_populates='elements')
 
 
@@ -41,7 +39,7 @@ class ElementContent(Base):
     ydiscover = db.Column(db.Integer, nullable=True)
     group = db.relationship('Group', back_populates='element_content', uselist=False)
     period = db.relationship('Period', back_populates='element_content', uselist=False)
-    subshells = db.relationship('ElectronCfg', back_populates='element')
+    electroncfgs = db.relationship('ElectronCfg', back_populates='element')
 
 
 class Group(Base):
