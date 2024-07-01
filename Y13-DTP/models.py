@@ -4,6 +4,7 @@ from sqlalchemy.orm import declarative_base, relationship
 Base = declarative_base()
 db = SQLAlchemy(model_class=Base)
 
+
 class Subshell(Base):
     __tablename__ = 'subshell'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
