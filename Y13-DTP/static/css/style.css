@@ -6,7 +6,7 @@ html, body {
   display: flex;
   flex-direction: column;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(315deg, #ffffff, #d7e1ec);
+  background: grey;
   padding-top: 0px;
 }
 .content {
@@ -235,7 +235,7 @@ html, body {
   text-align: right;
   font-weight: bold;
   font-size: 15px;
-  padding-top: 20px;
+  padding-top: 35px;
   text-align: center;
 }
 
@@ -314,7 +314,7 @@ html, body {
 }
 
 #container {
-  border: solid 3px #474544;
+  border: solid 3px #fff;
   padding-top: 18px;
   max-width: 768px;
   margin: 60px auto;
@@ -327,7 +327,7 @@ form {
 }
 
 h1 {
-  color: #474544;
+  color: #fff;
   font-size: 32px;
   font-weight: 700;
   letter-spacing: 7px;
@@ -344,8 +344,8 @@ h1 {
 input[type='text'], input[type='email'], select, textarea {
   background: none;
   border: none;
-  border-bottom: solid 2px #474544;
-  color: #474544;
+  border-bottom: solid 2px #fff;
+  color: #fff;
   font-size: 1em;
   font-weight: 400;
   letter-spacing: 1px;
@@ -368,13 +368,13 @@ textarea {
 }
 
 ::placeholder {
-  color: #474544;
+  color: #fff;
 }
 
 #form_button {
   background: none;
-  border: solid 2px #474544;
-  color: #474544;
+  border: solid 2px #fff;
+  color: #fff;
   cursor: pointer;
   font-family: 'Helvetica', Arial, sans-serif;
   font-size: 0.875em;
@@ -473,66 +473,57 @@ textarea {
   color: white;
   text-decoration: none;
 }
-/* Add this to the end of style.css */
+.category-1 { background-color: #ff9999; grid-column: 1; grid-row: 1; }
+.category-2 { background-color: #99ccff; grid-column: 2; grid-row: 1; }
+.category-3 { background-color: #99ff99; grid-column: 3; grid-row: 1; }
+.category-4 { background-color: #ffff99; grid-column: 4; grid-row: 1; }
+.category-5 { background-color: #ffcc99; grid-column: 5; grid-row: 1; }
+.category-6 { background-color: #cc99ff; grid-column: 6; grid-row: 1; }
+.category-7 { background-color: #ff99cc; grid-column: 7; grid-row: 1; }
+.category-8 { background-color: #99ffcc; grid-column: 8; grid-row: 1; }
+.category-9 { background-color: #ccff99; grid-column: 9; grid-row: 1; }
+.category-10 { background-color: #9999ff; grid-column: 10; grid-row: 1; }
 
-/* Styles for different categories */
-.category-1 {
-  background-color: #ff9999; /* Example color for category 1 */
+.solid { border: 3px double currentColor; color:rgba(0, 0, 0, 0.8) ; grid-column: 11; grid-row: 1; }
+.liquid { border: 3px solid currentColor; color: rgba(0, 0, 0, 0.8); grid-column: 12; grid-row: 1; }
+.gas { border: 3px dashed currentColor; color: rgba(0, 0, 0, 0.8); grid-column: 13; grid-row: 1; }
+.unknown { border: 3px dotted currentColor; color: rgba(0, 0, 0, 0.8); grid-column: 14; grid-row: 1; }
+.legend {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  gap: 5px;
+  margin-top: 20px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.category-2 {
-  background-color: #99ccff; /* Example color for category 2 */
+.legend-title {
+  grid-column: span 18;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
-.category-3 {
-  background-color: #99ff99; /* Example color for category 3 */
+.legend-table {
+  display: contents;
 }
 
-.category-4 {
-  background-color: #ffff99; /* Example color for category 4 */
+.legend-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
 }
 
-.category-5 {
-  background-color: #ffcc99; /* Example color for category 5 */
+.key {
+  grid-column: span 2;
+  grid-row: span 2;
+  background-color: #333;
 }
-
-.category-6 {
-  background-color: #cc99ff; /* Example color for category 6 */
-}
-
-.category-7 {
-  background-color: #ff99cc; /* Example color for category 7 */
-}
-
-.category-8 {
-  background-color: #99ffcc; /* Example color for category 8 */
-}
-
-.category-9 {
-  background-color: #ccff99; /* Example color for category 9 */
-}
-
-.category-10 {
-  background-color: #9999ff; /* Example color for category 10 */
-}
-
-/* Styles for different states at 0 degrees Celsius */
-.solid {
-  border: 3px double currentColor; /* Double solid line for solids */
-}
-
-.liquid {
-  border: 3px solid currentColor; /* Single solid line for liquids */
-}
-
-.gas {
-  border: 3px dashed currentColor; /* Broken line for gases */
-}
-
-.unknown {
-  border: 3px dotted currentColor; /* Dotted line for unknown states */
-}
-
 
 
 @media screen and (max-width: 768px) {

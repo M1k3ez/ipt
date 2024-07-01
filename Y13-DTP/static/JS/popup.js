@@ -24,7 +24,6 @@ $(document).ready(function() {
                     content += '<p>Electron Configuration: ' + response.configuration + '</p>';
                     if (response.category) {
                         content += '<p>Category: ' + response.category + '</p>';
-                        content += '<p>Category Description: ' + response.category_description + '</p>';
                     }
                     $('#popup-content').html(content);
                 }
