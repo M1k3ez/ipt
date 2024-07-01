@@ -68,71 +68,59 @@ def calculate_electron_configuration(atomic_number):
         if electrons_remaining <= 0:
             break
         electrons_in_subshell = min(electrons_remaining, subshell.maxelectrons)
-        configuration.append({
-            'subshell_id': subshell.id,
-            'electrons': electrons_in_subshell,
-            'pqn': subshell.id,  # Assuming `pqn` is the primary key or related to subshell.id
-            's': electrons_in_subshell if subshell.subshells.startswith('s') else None,
-            'p': electrons_in_subshell if subshell.subshells.startswith('p') else None,
-            'd': electrons_in_subshell if subshell.subshells.startswith('d') else None,
-            'f': electrons_in_subshell if subshell.subshells.startswith('f') else None
-        })
-        electrons_remaining -= electrons_in_subshell
-
-    return configuration
-
-
-def calculate_electron_configuration(atomic_number):
-    subshells = db.session.query(Subshell).order_by(Subshell.id).all()
-    configuration = []
-    electrons_remaining = atomic_number
-
-    for subshell in subshells:
-        if electrons_remaining <= 0:
-            break
-        electrons_in_subshell = min(electrons_remaining, subshell.maxelectrons)
-        pqn = int(subshell.subshells[0])  # Assuming subshells are in the format "1s", "2p", etc.
-        s = electrons_in_subshell if subshell.subshells.endswith('s') else None
-        p = electrons_in_subshell if subshell.subshells.endswith('p') else None
-        d = electrons_in_subshell if subshell.subshells.endswith('d') else None
-        f = electrons_in_subshell if subshell.subshells.endswith('f') else None
-        
-        configuration.append({
+        pqn = int(subshell.subshells[0])
+        subshell_type = subshell.subshells[1]
+        config = {
             'pqn': pqn,
-            's': s,
-            'p': p,
-            'd': d,
-            'f': f,
+            'subshell_id': subshell.id,
             'element_id': atomic_number,
-            'subshell_id': subshell.id
-        })
-        
+            subshell_type: electrons_in_subshell
+        }
+        configuration.append(config)
         electrons_remaining -= electrons_in_subshell
 
-    # Ensure only the final result for each subshell is included
     final_configuration = {}
     for config in configuration:
         subshell_id = config['subshell_id']
         if subshell_id in final_configuration:
-            final_configuration[subshell_id]['s'] = (final_configuration[subshell_id]['s'] or 0) + (config['s'] or 0)
-            final_configuration[subshell_id]['p'] = (final_configuration[subshell_id]['p'] or 0) + (config['p'] or 0)
-            final_configuration[subshell_id]['d'] = (final_configuration[subshell_id]['d'] or 0) + (config['d'] or 0)
-            final_configuration[subshell_id]['f'] = (final_configuration[subshell_id]['f'] or 0) + (config['f'] or 0)
+            for key in ['s', 'p', 'd', 'f']:
+                if key in config:
+                    if key in final_configuration[subshell_id]:
+                        final_configuration[subshell_id][key] += config[key]
+                    else:
+                        final_configuration[subshell_id][key] = config[key]
         else:
             final_configuration[subshell_id] = config
 
     config_string = ""
     for config in final_configuration.values():
-        if config['s']:
-            config_string += f"{config['pqn']}s<sup>{config['s']}</sup> "
-        if config['p']:
-            config_string += f"{config['pqn']}p<sup>{config['p']}</sup> "
-        if config['d']:
-            config_string += f"{config['pqn']}d<sup>{config['d']}</sup> "
-        if config['f']:
-            config_string += f"{config['pqn']}f<sup>{config['f']}</sup> "
+        for subshell in ['s', 'p', 'd', 'f']:
+            if subshell in config and config[subshell] > 0:
+                config_string += f"{config['pqn']}{subshell}<sup>{config[subshell]}</sup> "
 
-    return config_string.strip()
+    return final_configuration, config_string.strip()
+
+
+
+
+
+def store_electron_configuration(element_id, configuration):
+    db.session.query(ElectronCfg).filter_by(element_id=element_id).delete()
+    for subshell_id, config in configuration.items():
+        electron_cfg = ElectronCfg(
+            element_id=element_id,
+            subshell_id=config['subshell_id'],
+            pqn=config['pqn'],
+            s=config.get('s', None),
+            p=config.get('p', None),
+            d=config.get('d', None),
+            f=config.get('f', None)
+        )
+        db.session.add(electron_cfg)
+    db.session.commit()
+
+
+
 
 
 @app.route('/')
@@ -175,6 +163,8 @@ def get_element(electron):
     try:
         element = db.session.query(ElementContent).filter_by(electron=electron).first()
         if element:
+            configuration, config_string = calculate_electron_configuration(electron)
+            store_electron_configuration(element.electron, configuration)
             return jsonify({
                 "electron": element.electron,
                 "name": element.name,
@@ -184,12 +174,16 @@ def get_element(electron):
                 "boilingpoint": element.boilingpoint,
                 "details": element.furtherinfo,
                 "ydiscover": element.ydiscover,
+                "configuration": config_string
             })
         else:
             return jsonify({"error": "Element not found"}), 404
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
+
+
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -215,21 +209,6 @@ def contact():
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
-
-
-@app.route('/show_configuration/<int:atomic_number>', methods=['GET'])
-def show_configuration(atomic_number):
-    try:
-        element = db.session.query(ElementContent).filter_by(electron=atomic_number).first()
-        if element:
-            configuration = calculate_electron_configuration(atomic_number)
-            return render_template('show_configuration.html', element=element, configuration=configuration)
-        else:
-            return jsonify({"error": "Element not found"}), 404
-    except Exception as e:
-        print(f"Error: {e}")
-        return jsonify({"error": "Internal Server Error"}), 500
-
 
 
 if __name__ == '__main__':

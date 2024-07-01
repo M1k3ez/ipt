@@ -7,7 +7,7 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 if (response.error) {
-                    $('#popup-content').html('<p>' + 404 + '</p>');
+                    $('#popup-content').html('<p>' + response.error + '</p>');
                 } else {
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
                     content += '<p>Atomic number: ' + response.electron + '</p>';
@@ -15,7 +15,7 @@ $(document).ready(function() {
                     content += '<p>Melting Point: ' + response.meltingpoint + '°C</p>';
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°C</p>';
                     content += '<p>Year of Discovery: ' + response.ydiscover + '</p>';
-                    content += '<p><a href="' + response.details + '" target="_blank">Details (Press on, NIB.gov)</a></p>';
+                    content += '<p>Electron Configuration: ' + response.configuration + '</p>';
                     $('#popup-content').html(content);
                 }
                 $('.popup').addClass('active');
