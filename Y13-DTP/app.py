@@ -7,8 +7,10 @@ from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 
+# Initialize Flask application
 app = Flask(__name__)
 
 # Database configuration
@@ -26,11 +28,14 @@ app.config.update(
     MAIL_DEFAULT_SENDER=os.getenv('MAIL_DEFAULT_SENDER'),
     MAIL_DEBUG=False
 )
-
+# Initialize Flask-Mail
 mail = Mail(app)
+
+# Initialize the database with the Flask app
 db.init_app(app)
 
 
+# Define the contact form using Flask-WTF
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[
         DataRequired(),
@@ -59,24 +64,28 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Send Message')
 
 
+# Function to calculate electron configuration
 def calculate_electron_configuration(atomic_number):
     subshells = db.session.query(Subshell).order_by(Subshell.id).all()
-    configuration = []
+    # Query all subshells
+    configuration = []  # Initialize configuration list
     electrons_remaining = atomic_number
+    # Set remaining electrons to atomic number
     for subshell in subshells:
         if electrons_remaining <= 0:
-            break
+            break  # Exit loop if no electrons remaining
         electrons_in_subshell = min(electrons_remaining, subshell.maxelectrons)
-        pqn = int(subshell.subshells[0])
-        subshell_type = subshell.subshells[1]
+        # Electrons in current subshell
+        pqn = int(subshell.subshells[0])  # Principal quantum number
+        subshell_type = subshell.subshells[1]  # Subshell type
         config = {
             'pqn': pqn,
             'subshell_id': subshell.id,
             'element_id': atomic_number,
             subshell_type: electrons_in_subshell
         }
-        configuration.append(config)
-        electrons_remaining -= electrons_in_subshell
+        configuration.append(config)  # Append configuration
+        electrons_remaining -= electrons_in_subshell  # Subtract electrons
     final_configuration = {}
     for config in configuration:
         subshell_id = config['subshell_id']
@@ -93,13 +102,14 @@ def calculate_electron_configuration(atomic_number):
     for config in final_configuration.values():
         for subshell in ['s', 'p', 'd', 'f']:
             if subshell in config and config[subshell] > 0:
-                config_string += f"{config['pqn']}{subshell}\
-                    <sup>{config[subshell]}</sup> "
+                config_string += f"{config['pqn']}{subshell}<sup>{config[subshell]}</sup> "
     return final_configuration, config_string.strip()
 
 
+# Function to store electron configuration in the database
 def store_electron_configuration(element_id, configuration):
     db.session.query(ElectronCfg).filter_by(element_id=element_id).delete()
+    # Delete existing configuration
     for subshell_id, config in configuration.items():
         electron_cfg = ElectronCfg(
             element_id=element_id,
@@ -110,16 +120,15 @@ def store_electron_configuration(element_id, configuration):
             d=config.get('d', None),
             f=config.get('f', None)
         )
-        db.session.add(electron_cfg)
-    db.session.commit()
+        db.session.add(electron_cfg)  # Add new configuration
+    db.session.commit()  # Commit changes
 
 
+# Function to determine the state of an element at 273 Kelvin (0 celcius)
 def determine_state_at_zero(element):
     try:
-        meltingpoint = int(element.meltingpoint)\
-            if element.meltingpoint != 'N/A' else None
-        boilingpoint = int(element.boilingpoint)\
-            if element.boilingpoint != 'N/A' else None
+        meltingpoint = int(element.meltingpoint) if element.meltingpoint != 'N/A' else None
+        boilingpoint = int(element.boilingpoint) if element.boilingpoint != 'N/A' else None
     except ValueError:
         return "unknown"
     if meltingpoint is None:
@@ -169,8 +178,11 @@ def home():
     return render_template("home.html", elements=elements)
 
 
+# Route to get details of an element by atomic number
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
+    if electron < 1 or electron > 118:  # Boundary check
+        return render_template('404.html'), 404
     element = db.session.query(ElementContent).filter_by(electron=electron).first()
     if not element:
         return jsonify({"error": "Element not found"}), 404
@@ -197,16 +209,16 @@ def get_element(electron):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit():  # Check if form is valid
         msg = Message(
             subject=form.subject.data,
             sender=app.config['MAIL_DEFAULT_SENDER'],
             recipients=["ipttnoreply@gmail.com"]
         )
         msg.reply_to = form.email.data
-        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\
-            \nPhone: {form.telephone.data}\\nMessage: {form.message.data}"
-        mail.send(msg)
+        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\n\
+            Phone: {form.telephone.data}\nMessage: {form.message.data}"
+        mail.send(msg)  # Send email
         flash('Your message has been sent successfully!', 'success')
         return redirect(url_for('contact'))
     return render_template('contact.html', form=form)

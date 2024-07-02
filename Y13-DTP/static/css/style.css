@@ -7,10 +7,8 @@ html, body {
   flex-direction: column;
   font-family: 'Poppins', sans-serif;
   background: grey;
-  padding: 0;
-  box-sizing: border-box;
+  padding-top: 0px;
 }
-
 .content {
   font-family: 'Oswald', sans-serif;
 }
@@ -29,7 +27,6 @@ html, body {
   outline: none !important;
   -webkit-tap-highlight-color: transparent;
 }
-
 .navbar {
   font-family: 'Poppins', sans-serif;
   position: fixed;
@@ -43,19 +40,14 @@ html, body {
   align-items: center;
   z-index: 100;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: top 0.3s;
 }
-
 .navlist {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
   padding-left: 900px;
 }
-
 .navbar.hidden {
   top: -90px; 
 }
-
 .navbar header {
   display: flex;
   justify-content: space-between;
@@ -316,9 +308,9 @@ html, body {
 #container {
   border: solid 3px #fff;
   padding-top: 18px;
-  max-width: 768px;
+  max-width: 100%;
   margin: 60px auto;
-  position: relative;
+  padding: 0 10px;
 }
 form {
   padding: 37.5px;
@@ -478,7 +470,7 @@ textarea {
 }
 
 .legend-table {
-  display: contents;
+  display: contents;;
 }
 
 .legend-cell {
@@ -533,83 +525,11 @@ textarea {
   padding-left: 30px;
   padding-top: 2px;
 }
-
-@media screen and (max-width: 768px) {
-  #container {
-    margin: 20px auto;
-    width: 95%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  h1 {
-    font-size: 26px;
-  }
-  .underline {
-    width: 68px;
-  }
-  #form_button {
-    padding: 15px 25px;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  h1 {
-    font-size: 18px;
-  }
-  .icon {
-    height: 35px;
-    width: 35px;
-  }
-  .underline {
-    width: 53px;
-  }
-  input[type='text'], input[type='email'], select, textarea {
-    font-size: 0.875em;
-  }
-}
-
 @keyframes notify {
   0% {transform: scaleX(0); opacity: 0;}
   10% {transform: scaleX(1); opacity: 1;}
   90% {transform: scaleX(1); opacity: 1;}
   100% {transform: scaleX(0); opacity: 0;}
-}
-
-@media (max-width: 1200px) {
-  .periodic-table {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .periodic-table {
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  }
-  .element-symbol {
-    font-size: 16px;
-  }
-  .element-name {
-    font-size: 12px;
-  }
-  .element-number, .element-weight {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .periodic-table {
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-  }
-  .element-symbol {
-    font-size: 14px;
-  }
-  .element-name {
-    font-size: 10px;
-  }
-  .element-number, .element-weight {
-    font-size: 8px;
-  }
 }
 @keyframes logo-slide-in {
   from {
@@ -820,105 +740,3 @@ body {
   margin-top: 20px;
   font-size: 0.8em;
 }
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 10px 2%;
-  }
-
-  .navlist {
-    flex-direction: column;
-    padding-left: 0;
-  }
-
-  .navlist a {
-    margin: 10px 0;
-    text-align: center;
-  }
-
-  .footer .icon {
-    padding: 10px;
-    margin: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .periodic-table {
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  }
-
-  .element-symbol {
-    font-size: 16px;
-  }
-
-  .element-name {
-    font-size: 12px;
-  }
-
-  .element-number, .element-weight {
-    font-size: 10px;
-  }
-
-  #container {
-    margin: 20px auto;
-    width: 95%;
-  }
-
-  h1 {
-    font-size: 26px;
-  }
-
-  .underline {
-    width: 68px;
-  }
-
-  #form_button {
-    padding: 15px 25px;
-  }
-
-  input[type='text'], input[type='email'], select, textarea {
-    font-size: 0.875em;
-  }
-
-  .icon {
-    height: 35px;
-    width: 35px;
-  }
-}
-
-@media (max-width: 480px) {
-  .periodic-table {
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-  }
-
-  .element-symbol {
-    font-size: 14px;
-  }
-
-  .element-name {
-    font-size: 10px;
-  }
-
-  .element-number, .element-weight {
-    font-size: 8px;
-  }
-
-  h1 {
-    font-size: 18px;
-  }
-
-  .underline {
-    width: 53px;
-  }
-
-  .icon {
-    height: 35px;
-    width: 35px;
-  }
-
-  input[type='text'], input[type='email'], select, textarea {
-    font-size: 0.875em;
-  }
-}
-
