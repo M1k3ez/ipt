@@ -7,8 +7,10 @@ html, body {
   flex-direction: column;
   font-family: 'Poppins', sans-serif;
   background: grey;
-  padding-top: 0px;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 .content {
   font-family: 'Oswald', sans-serif;
 }
@@ -27,6 +29,7 @@ html, body {
   outline: none !important;
   -webkit-tap-highlight-color: transparent;
 }
+
 .navbar {
   font-family: 'Poppins', sans-serif;
   position: fixed;
@@ -40,14 +43,19 @@ html, body {
   align-items: center;
   z-index: 100;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: top 0.3s;
 }
+
 .navlist {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   padding-left: 900px;
 }
+
 .navbar.hidden {
   top: -90px; 
 }
+
 .navbar header {
   display: flex;
   justify-content: space-between;
@@ -470,7 +478,7 @@ textarea {
 }
 
 .legend-table {
-  display: contents;;
+  display: contents;
 }
 
 .legend-cell {
@@ -812,3 +820,105 @@ body {
   margin-top: 20px;
   font-size: 0.8em;
 }
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px 2%;
+  }
+
+  .navlist {
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .navlist a {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .footer .icon {
+    padding: 10px;
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .periodic-table {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  }
+
+  .element-symbol {
+    font-size: 16px;
+  }
+
+  .element-name {
+    font-size: 12px;
+  }
+
+  .element-number, .element-weight {
+    font-size: 10px;
+  }
+
+  #container {
+    margin: 20px auto;
+    width: 95%;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .underline {
+    width: 68px;
+  }
+
+  #form_button {
+    padding: 15px 25px;
+  }
+
+  input[type='text'], input[type='email'], select, textarea {
+    font-size: 0.875em;
+  }
+
+  .icon {
+    height: 35px;
+    width: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .periodic-table {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  }
+
+  .element-symbol {
+    font-size: 14px;
+  }
+
+  .element-name {
+    font-size: 10px;
+  }
+
+  .element-number, .element-weight {
+    font-size: 8px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .underline {
+    width: 53px;
+  }
+
+  .icon {
+    height: 35px;
+    width: 35px;
+  }
+
+  input[type='text'], input[type='email'], select, textarea {
+    font-size: 0.875em;
+  }
+}
+
