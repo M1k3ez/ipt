@@ -2,15 +2,13 @@ import os
 from flask import Flask, render_template, flash, redirect, url_for, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
-from config import Config
-from forms import ContactForm
-from utils import calculate_electron_configuration, \
+from config import Config, MAX_ELECTRON, MIN_ELECTRON
+from forms.forms import ContactForm
+from utils.utils import calculate_electron_configuration, \
     store_electron_configuration, determine_state_at_zero
-
 
 # Initialize Flask application
 app = Flask(__name__)
-
 
 # Load configuration from config.py
 app.config.from_object(Config)
@@ -20,7 +18,6 @@ mail = Mail(app)
 
 # Initialize the database with the Flask app
 db.init_app(app)
-
 
 @app.route('/')
 def home():
@@ -56,15 +53,10 @@ def home():
     ]
     return render_template("home.html", elements=elements)
 
-
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
-    if electron < 1 or electron > 118:
-        return render_template('404.html'), 404
-    element = db.session.query(ElementContent).filter_by(electron=electron).first()
-    if not element:
-        return jsonify({"error": "Element not found"}), 404
-    category = db.session.query(Category).filter_by(ecid=electron).first()
+    element = db.session.query(ElementContent).filter_by(electron=electron).first_or_404()
+    category = db.session.query(Category).filter_by(ecid=electron).first_or_404()
     configuration, config_string = calculate_electron_configuration(electron)
     store_electron_configuration(element.electron, configuration)
     return jsonify({

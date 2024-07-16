@@ -1,1 +1,0 @@
-SELECT elementcontent.electron, elementcontent.name, elementcontent.symbol, elementcontent.meltingpoint, elementcontent.boilingpoint, elementcontent.furtherinfo, elementcontent.ydiscover FROM elementcontent JOIN "group" ON elementcontent.electron = "group".ecid JOIN period ON elementcontent.electron = period.ecid WHERE "group".id = ? AND period.pid = ?;
