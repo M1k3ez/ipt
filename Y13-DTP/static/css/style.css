@@ -498,9 +498,9 @@ textarea {
 .category-7 { background-color: #9999ff; grid-column: 10; grid-row: 1; color:#000;} /* Unknown */
 
 .solid { border: 3px double currentColor; color: black; grid-column: 1; grid-row: 2; }
-.liquid { border: 3px solid currentColor; color: black; grid-column: 2; grid-row: 2; }
-.gas { border: 3px dashed currentColor; color: black; grid-column: 3; grid-row: 2; }
-.unknown { border: 3px dotted currentColor; color: black; grid-column: 4; grid-row: 2; }
+.liquid { border: 1px solid currentColor; color: black; grid-column: 2; grid-row: 2; }
+.gas { border: 1px dashed currentColor; color: black; grid-column: 3; grid-row: 2; }
+.unknown { border: 1px dotted currentColor; color: black; grid-column: 4; grid-row: 2; }
 /* Add this to the end of style.css */
 
 .corner-label {

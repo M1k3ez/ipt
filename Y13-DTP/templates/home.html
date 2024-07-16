@@ -4,9 +4,9 @@
     <!-- Instructions and controls for temperature slider -->
     <a>Drag and drop to modify temperature and element's state</a>
     <label for="temperature-slider">Temperature (K):</label>
-    <input type="range" id="temperature-slider" name="temperature-slider" min="0" max="7000" value="273" oninput="updateTemperature(this.value)">
+    <input type="range" id="temperature-slider" name="temperature-slider" min="0" max="7000" value="273">
     <span id="temperature-value">273 K</span>
-    <button id="reset-temperature" onclick="resetTemperature()">Reset to STP</button>
+    <button id="reset-temperature">Reset to STP</button>
 </div>
 <!-- Periodic table structure -->
 <div class="periodic-table">
@@ -27,7 +27,7 @@
         {% endfor %}
     </div>
     <!-- Placeholder for Lanthanides -->
-    <div class="element placeholder lanthanides" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides">
+    <div class="element placeholder lanthanides" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A">
         <a href="#" class="element-link" data-id="lanthanides">
             <div class="element-number">57-71</div>
             <div class="element-symbol">La</div>
@@ -36,7 +36,7 @@
         </a>
     </div>
     <!-- Placeholder for Actinides -->
-    <div class="element placeholder actinides" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides">
+    <div class="element placeholder actinides" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides" data-melting="N/A" data-boiling="N/A">
         <a href="#" class="element-link" data-id="actinides">
             <div class="element-number">89-103</div>
             <div class="element-symbol">Ac</div>
@@ -49,15 +49,15 @@
         {% set category_class = 'category-' ~ element.category_id %}
         {% if 57 <= element.electron <= 71 %}
             <!-- Lanthanides -->
-            <div class="element lanthanides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element lanthanides {{ category_class }}" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% elif 89 <= element.electron <= 103 %}
             <!-- Actinides -->
-            <div class="element actinides {{ element.state }} {{ category_class }}" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element actinides {{ category_class }}" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% else %}
             <!-- Other elements -->
-            <div class="element {{ element.state }} {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
                     <div class="element-number">{{ element.electron }}</div>

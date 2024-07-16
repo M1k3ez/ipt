@@ -4,8 +4,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const elements = document.querySelectorAll('.element');
     const resetButton = document.getElementById('reset-temperature');
 
+    const MIN_TEMPERATURE = 0;
+    const MAX_TEMPERATURE = 7000;
+
+    // Use the 404 route URL from Flask
+    const notFoundRoute = '/404'; 
+
+    function validateTemperature(temperature) {
+        if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE) {
+            window.location.href = notFoundRoute;
+            return false;
+        }
+        return true;
+    }
+
     function updateTemperature(value) {
         const temperature = parseInt(value);
+        if (!validateTemperature(temperature)) {
+            temperatureSlider.value = 273; // Reset to a valid value to prevent further issues
+            return;
+        }
+
         temperatureValue.textContent = `${temperature} K`;
         elements.forEach(element => {
             const meltingPoint = element.getAttribute('data-melting');
@@ -34,7 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Handle changes through user interaction and direct console manipulation
     temperatureSlider.addEventListener('input', function() {
+        updateTemperature(this.value);
+    });
+
+    temperatureSlider.addEventListener('change', function() {
         updateTemperature(this.value);
     });
 
@@ -43,5 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTemperature(273);
     });
 
-    temperatureSlider.dispatchEvent(new Event('input'));
+    // Initial validation and setting
+    updateTemperature(temperatureSlider.value);
 });
