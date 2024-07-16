@@ -25,6 +25,7 @@ $(document).ready(function() {
                     // Display element details
                     var content = '<h2>' + response.name + ' (' + response.symbol + ')</h2>';
                     content += '<p>Atomic number: ' + response.electron + '</p>';
+                    content += '<p>Atomic mass: ' + response.atomicmass + '<p>';
                     content += '<p>Electronegativity: ' + response.enegativity + '</p>';
                     content += '<p>Melting Point: ' + response.meltingpoint + '°K</p>';
                     content += '<p>Boiling Point: ' + response.boilingpoint + '°K</p>';

@@ -33,6 +33,7 @@ class ElementContent(Base):
     electron = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     symbol = db.Column(db.String, nullable=True)
+    atomicmass = db.Column(db.String, nullable=True)
     enegativity = db.Column(db.Integer, nullable=False)
     meltingpoint = db.Column(db.Integer, nullable=False)
     boilingpoint = db.Column(db.Integer, nullable=False)
