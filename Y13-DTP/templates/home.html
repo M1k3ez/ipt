@@ -4,10 +4,13 @@
     <!-- Instructions and controls for temperature slider -->
     <a>Drag and drop to modify temperature and element's state</a>
     <label for="temperature-slider">Temperature (K):</label>
-    <input type="range" id="temperature-slider" name="temperature-slider" min="0" max="7000" value="273">
-    <span id="temperature-value">273 K</span>
+    <input type="range" id="temperature-slider" name="temperature-slider" min="{{ config.MIN_TEMP }}" max="{{ config.MAX_TEMP }}" value="{{ config.NORM_TEMP }}">
+    <span id="temperature-value">{{ config.NORM_TEMP }} K</span>
     <button id="reset-temperature">Reset to STP</button>
 </div>
+<div id="min-temp" style="display: none;">{{ config.MIN_TEMP }}</div>
+<div id="max-temp" style="display: none;">{{ config.MAX_TEMP }}</div>
+<div id="norm-temp" style="display: none;">{{ config.NORM_TEMP }}</div>
 <!-- Periodic table structure -->
 <div class="periodic-table">
     <div class="corner-label">
@@ -60,12 +63,12 @@
             <div class="element {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
-                    <div class="element-number">{{ element.electron }}</div>
-                    <div class="element-symbol">{{ element.symbol }}</div>
-                    <div class="element-name">{{ element.name }}</div>
-                    <div class="element-weight">{{ element.weight }}</div>
-                </a>
-            </div>
+                <div class="element-number">{{ element.electron }}</div>
+                <div class="element-symbol">{{ element.symbol }}</div>
+                <div class="element-name">{{ element.name }}</div>
+                <div class="element-weight">{{ element.weight }}</div>
+            </a>
+        </div>
     {% endfor %}
 </div>
 <!-- Legend for the periodic table -->
@@ -74,7 +77,7 @@
     <div class="legend-table">
         <div class="legend-cell category-2"><a href="https://en.wikipedia.org/wiki/Alkali_metal">Alkali metals</a></div>
         <div class="legend-cell category-3"><a href="https://en.wikipedia.org/wiki/Alkaline_earth_metal">Alkaline earth metals</a></div>
-        <div class="legend-cell category-9"><a href="https://en.wikipedia.org/wiki/Lanthanide">Lanthanoids</div></a>
+        <div class="legend-cell category-9"><a href="https://en.wikipedia.org/wiki/Lanthanide">Lanthanoids</a></div>
         <div class="legend-cell category-10"><a href="https://en.wikipedia.org/wiki/Actinide">Actinoids</a></div>
         <div class="legend-cell category-4"><a href="https://en.wikipedia.org/wiki/Transition_metal">Transition metals</a></div>
         <div class="legend-cell category-5"><a href="https://en.wikipedia.org/wiki/Post-transition_metal">Post-transition metals</a></div>
@@ -95,4 +98,5 @@
         <div id="popup-content"></div>
     </div>
 </div>
+<script src="{{ url_for('static', filename='js/temperature.js') }}"></script>
 {% endblock %}

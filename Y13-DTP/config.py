@@ -1,11 +1,8 @@
-# config.py
 import os
 from dotenv import load_dotenv
 
-
 # Load environment variables from .env file
 load_dotenv()
-
 
 class Config:
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'ipt.sqlite3')}"
@@ -19,3 +16,8 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
     MAIL_DEBUG = False
+
+    # Constants from .env file
+    MIN_TEMP = int(os.getenv('MIN_TEMP'))
+    MAX_TEMP = int(os.getenv('MAX_TEMP'))
+    NORM_TEMP = int(os.getenv('NORM_TEMP'))

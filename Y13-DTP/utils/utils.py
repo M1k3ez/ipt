@@ -1,4 +1,3 @@
-# utils.py
 from models import db, Subshell, ElectronCfg
 
 # Function to calculate electron configuration
@@ -55,8 +54,14 @@ def store_electron_configuration(element_id, configuration):
         db.session.add(electron_cfg)
     db.session.commit()
 
-# Function to determine the state of an element at 273 Kelvin (0 Celsius)
-def determine_state_at_zero(element):
+
+# Function to determine the state of an element at normal temperature (default 273 K)
+def determine_state_at_zero(element, norm_temp):
+    return determine_state_at_temperature(element, norm_temp)
+
+
+# Function to determine the state of an element at a given temperature
+def determine_state_at_temperature(element, temperature):
     try:
         meltingpoint = int(element.meltingpoint) if element.meltingpoint != 'N/A' else None
         boilingpoint = int(element.boilingpoint) if element.boilingpoint != 'N/A' else None
@@ -65,10 +70,12 @@ def determine_state_at_zero(element):
     if meltingpoint is None:
         return "unknown"
     elif boilingpoint is None:
-        return "solid" if meltingpoint > 273 else "liquid"
-    elif meltingpoint > 273:
+        return "solid" if meltingpoint > temperature else "liquid"
+    elif meltingpoint > temperature:
         return "solid"
-    elif meltingpoint <= 273 and boilingpoint > 273:
+    elif meltingpoint <= temperature and boilingpoint > temperature:
         return "liquid"
     else:
         return "gas"
+
+

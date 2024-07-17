@@ -4,8 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const elements = document.querySelectorAll('.element');
     const resetButton = document.getElementById('reset-temperature');
 
-    const MIN_TEMPERATURE = 0;
-    const MAX_TEMPERATURE = 7000;
+    // Constants from Flask
+    const MIN_TEMPERATURE = parseInt(document.getElementById('min-temp').textContent);
+    const MAX_TEMPERATURE = parseInt(document.getElementById('max-temp').textContent);
+    const NORM_TEMPERATURE = parseInt(document.getElementById('norm-temp').textContent);
 
     // Use the 404 route URL from Flask
     const notFoundRoute = '/404'; 
@@ -21,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateTemperature(value) {
         const temperature = parseInt(value);
         if (!validateTemperature(temperature)) {
-            temperatureSlider.value = 273; // Reset to a valid value to prevent further issues
+            temperatureSlider.value = NORM_TEMPERATURE; // Reset to a valid value to prevent further issues
             return;
         }
 
@@ -63,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     resetButton.addEventListener('click', function() {
-        temperatureSlider.value = 273;
-        updateTemperature(273);
+        temperatureSlider.value = NORM_TEMPERATURE;
+        updateTemperature(NORM_TEMPERATURE);
     });
 
     // Initial validation and setting
