@@ -77,5 +77,3 @@ def determine_state_at_temperature(element, temperature):
         return "liquid"
     else:
         return "gas"
-
-
