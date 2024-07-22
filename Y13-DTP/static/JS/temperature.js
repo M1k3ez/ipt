@@ -55,6 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Check for long element names and adjust font size if necessary
+    function adjustElementNameFontSize() {
+        const elementNames = document.querySelectorAll('.element-name');
+        elementNames.forEach(function (element) {
+            const maxLength = 10; // Adjust this value based on your design needs
+            if (element.textContent.length > maxLength) {
+                element.classList.add('small-font'); // Add the small-font class
+            }
+        });
+    }
+
     // Handle changes through user interaction and direct console manipulation
     temperatureSlider.addEventListener('input', function() {
         updateTemperature(this.value);
@@ -71,4 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial validation and setting
     updateTemperature(temperatureSlider.value);
+
+    // Adjust font size of element names on page load
+    adjustElementNameFontSize();
 });

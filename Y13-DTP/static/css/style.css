@@ -503,6 +503,10 @@ textarea {
 .unknown { border: 2px dotted currentColor; color: black; grid-column: 4; grid-row: 2; }
 /* Add this to the end of style.css */
 
+.small-font {
+  font-size: 10px; /* You can adjust this to a specific size if needed */
+}
+
 .corner-label {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;

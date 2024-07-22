@@ -18,6 +18,7 @@ mail = Mail(app)
 # Initialize the database with the Flask app
 db.init_app(app)
 
+
 @app.route('/')
 def home():
     elements = db.session.query(
@@ -52,6 +53,7 @@ def home():
     ]
     return render_template("home.html", elements=elements, config=Config)
 
+
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
     element = db.session.query(ElementContent).filter_by(electron=electron).first_or_404()
@@ -75,6 +77,7 @@ def get_element(electron):
         "categorydescription": category.description if category else None,
     })
 
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
@@ -91,17 +94,21 @@ def contact():
         return redirect(url_for('contact'))
     return render_template('contact.html', form=form, config=Config)
 
+
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html', config=Config)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', config=Config), 404
 
+
 @app.errorhandler(500)
 def internal_error(e):
     return render_template('404.html', config=Config), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
