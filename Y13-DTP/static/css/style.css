@@ -380,7 +380,6 @@ textarea {
   top: 60px;
   right: 10px;
   width: auto;
-  background-color: rgba(188, 152, 237, 1);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   z-index: 1000;
@@ -401,6 +400,14 @@ textarea {
 
 .notification.hidden {
   display: none;
+}
+
+.notification.success {
+  background-color: rgb(12, 226, 76);
+}
+
+.notification.danger {
+  background-color: rgb(255, 0, 0);
 }
 
 .error-container {
