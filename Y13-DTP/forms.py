@@ -1,13 +1,15 @@
-# forms.py
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, Regexp, ValidationError
+import re
 
 def email_domain_check(form, field):
-    allowed_domains = ["gmail.com", "yahoo.com", "outlook.com"]
+    if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$', field.data):
+        raise ValidationError("Invalid email format.")
     domain = field.data.split('@')[-1]
-    if domain not in allowed_domains:
-        raise ValidationError("Please use gmail.com, yahoo.com, or outlook.com email domain.")
+    allowed_domains = ["gmail.com", "yahoo.com", "outlook.com"]
+    if not (domain in allowed_domains or ".edu" in domain or '.uni' in domain or '.school' in domain):
+        raise ValidationError("Please use school/edu/uni or a gmail.com, yahoo.com, outlook.com email.")
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[
@@ -19,7 +21,7 @@ class ContactForm(FlaskForm):
     ])
     telephone = StringField('Telephone', validators=[
         DataRequired(), Length(max=15),
-        Regexp('^[0-9]*$', message="Phone numbers must be numers")
+        Regexp('^[0-9]*$', message="Phone numbers must be numbers.")
     ])
     subject = SelectField('Subject', choices=[
         ('Advice', "Advice"),

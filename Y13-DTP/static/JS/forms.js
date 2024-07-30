@@ -1,4 +1,3 @@
-// form.js
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById('contact_form');
 
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             if (data.errors) {
                 data.errors.forEach(error => {
-                    showFlashMessage(`Error in ${error.field}: ${error.message}`, data.category);
+                    showFlashMessage(`Error in ${error.field}: ${error.message}`, 'danger');
                 });
             } else {
                 showFlashMessage(data.message, data.category);

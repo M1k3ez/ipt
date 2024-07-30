@@ -1,11 +1,10 @@
-# app.py
 import os
 from flask import Flask, render_template, flash, redirect, url_for, request, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
 from config import Config
-from forms.forms import ContactForm
-from utils.utils import calculate_electron_configuration, store_electron_configuration, determine_state_at_zero
+from forms import ContactForm
+from functions import calculate_electron_configuration, determine_state_at_zero, store_electron_configuration
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -101,7 +100,6 @@ def contact():
             for field, errors in form.errors.items():
                 for error in errors:
                     flash(f"Error in {getattr(form, field).label.text}: {error}", 'danger')
-
     return render_template('contact.html', form=form, config=Config)
 
 @app.route('/aboutus')

@@ -1,4 +1,3 @@
-// flash.js
 document.addEventListener("DOMContentLoaded", function() {
   function showFlashMessage(message, category) {
       const notification = document.createElement('ul');
