@@ -53,27 +53,29 @@ def home():
     ]
     return render_template("home.html", elements=elements, config=Config)
 
+
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
-    element = db.session.query(ElementContent).filter_by(electron=electron).first()
-    if element:
-        data = {
-            "electron": element.electron,
-            "name": element.name,
-            "symbol": element.symbol,
-            "meltingpoint": element.meltingpoint,
-            "boilingpoint": element.boilingpoint,
-            "furtherinfo": element.furtherinfo,
-            "ydiscover": element.ydiscover,
-            "group": element.group_id,
-            "period": element.period_id,
-            "category_id": element.category_id,
-            "state": determine_state_at_zero(element, Config.NORM_TEMP),
-            "electron_configuration": calculate_electron_configuration(element.electron)
-        }
-        return jsonify(data)
-    else:
-        return jsonify({"error": "Element not found"}), 404
+    element = db.session.query(ElementContent).filter_by(electron=electron).first_or_404()
+    category = db.session.query(Category).filter_by(ecid=electron).first_or_404()
+    configuration, config_string = calculate_electron_configuration(electron)
+    store_electron_configuration(element.electron, configuration)
+    return jsonify({
+        "electron": element.electron,
+        "name": element.name,
+        "symbol": element.symbol,
+        "atomicmass": element.atomicmass,
+        "enegativity": element.enegativity,
+        "meltingpoint": element.meltingpoint,
+        "boilingpoint": element.boilingpoint,
+        "details": element.furtherinfo,
+        "ydiscover": element.ydiscover,
+        "group": element.group.name if element.group else None,
+        "period": element.period.pname if element.period else None,
+        "configuration": config_string,
+        "category": category.name if category else None,
+        "categorydescription": category.description if category else None,
+    })
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
