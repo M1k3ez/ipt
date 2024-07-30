@@ -12,14 +12,14 @@ def email_domain_check(form, field):
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[
         DataRequired(), Length(max=24),
-        Regexp('^[a-zA-Z ]*$', message="Name must contain only letters and spaces.")
+        Regexp('^[a-zA-Z ]*$', message="Please reinput your names with letters only.")
     ])
     email = StringField('Email', validators=[
         DataRequired(), Email(), Length(max=45), email_domain_check
     ])
     telephone = StringField('Telephone', validators=[
         DataRequired(), Length(max=15),
-        Regexp('^[0-9]*$', message="Phone number must contain only numbers.")
+        Regexp('^[0-9]*$', message="Phone numbers must be numers")
     ])
     subject = SelectField('Subject', choices=[
         ('Advice', "Advice"),

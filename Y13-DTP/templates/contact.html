@@ -10,7 +10,7 @@
         {{ form.hidden_tag() }}
         <div class="name">
             {{ form.name.label(hidden=True) }}
-            {{ form.name(id='name_input', placeholder='My name is', pattern="[A-Za-z ]{1,24}", title="Name must contain only letters and spaces, and be no longer than 24 characters.") }}
+            {{ form.name(id='name_input', placeholder='My name is', pattern="[A-Za-z ]{1,24}", title="Name must be only letters and spaces.") }}
         </div>
         <div class="email">
             {{ form.email.label(hidden=True) }}
