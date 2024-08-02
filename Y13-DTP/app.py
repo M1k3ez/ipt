@@ -18,6 +18,7 @@ mail = Mail(app)
 # Initialize the database with the Flask app
 db.init_app(app)
 
+
 @app.route('/')
 def home():
     elements = db.session.query(
