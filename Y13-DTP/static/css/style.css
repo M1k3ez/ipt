@@ -288,8 +288,8 @@ html, body {
 }
 .lanthanides {
   grid-column: 4 / span 1;
+  z-index: 1003;  
   grid-row: 10;
-  z-index: 1003;
 }
 .actinides {
   grid-column: 4 / span 1;
@@ -768,7 +768,7 @@ body {
   line-height: 1;
   user-select: none;
   pointer-events: none;
-  position: fixed;
+  position: absolute;
   display: none;
   opacity: 0;
   white-space: nowrap;
@@ -822,6 +822,49 @@ body {
   transform: translate(-50%, -.5em);
 }
 
+/* FLOW: DOWN */
+[tooltip][flow^="down"]::before {
+  top: 100%;
+  border-top-width: 0;
+  border-bottom-color: #333;
+}
+[tooltip][flow^="down"]::after {
+  top: calc(100% + 5px);
+}
+[tooltip][flow^="down"]::before,
+[tooltip][flow^="down"]::after {
+  left: 50%;
+  transform: translate(-50%, .5em);
+}
+
+/* FLOW: LEFT */
+[tooltip][flow^="left"]::before {
+  top: 50%;
+  border-right-width: 0;
+  border-left-color: #333;
+  left: calc(0em - 5px);
+  transform: translate(-.5em, -50%);
+}
+[tooltip][flow^="left"]::after {
+  top: 50%;
+  right: calc(100% + 5px);
+  transform: translate(-.5em, -50%);
+}
+
+/* FLOW: RIGHT */
+[tooltip][flow^="right"]::before {
+  top: 50%;
+  border-left-width: 0;
+  border-right-color: #333;
+  right: calc(0em - 5px);
+  transform: translate(.5em, -50%);
+}
+[tooltip][flow^="right"]::after {
+  top: 50%;
+  left: calc(100% + 5px);
+  transform: translate(.5em, -50%);
+}
+
 /* KEYFRAMES */
 @keyframes tooltips-vert {
   to {
@@ -857,12 +900,12 @@ body {
 /* Position adjustments for lanthanides and actinides tooltips */
 .element.placeholder.lanthanides[tooltip]::before,
 .element.placeholder.lanthanides[tooltip]::after {
-  z-index: 10002; /* Ensure tooltips are above other elements */
-  position: absolute;
+  z-index: 1002; /* Ensure tooltips are above other elements */
+  transform: translateY(-50px); /* Adjust position to avoid overlap */
 }
 
 .element.placeholder.actinides[tooltip]::before,
 .element.placeholder.actinides[tooltip]::after {
-  z-index: 10002; /* Ensure tooltips are above other elements */
-  position: absolute;
+  z-index: 1002; /* Ensure tooltips are above other elements */
+  transform: translateY(-50px); /* Adjust position to avoid overlap */
 }

@@ -30,7 +30,7 @@
         {% endfor %}
     </div>
     <!-- Placeholder for Lanthanides -->
-    <div class="element placeholder lanthanides tooltip" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A" tooltip="Lanthanoids (57-71)&#10;, See below for more details">
+    <div class="element placeholder lanthanides tooltip" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A" tooltip="Lanthanoids (57-71)&#10;Click here for more details">
         <a href="#" class="element-link" data-id="lanthanides">
             <div class="element-number">57-71</div>
             <div class="element-symbol">La</div>
@@ -39,7 +39,7 @@
         </a>
     </div>
     
-    <div class="element placeholder actinides tooltip" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides" data-melting="N/A" data-boiling="N/A" tooltip="Actinoids (89-103)&#10;, See below for more details">
+    <div class="element placeholder actinides tooltip" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides" data-melting="N/A" data-boiling="N/A" tooltip="Actinoids (89-103)&#10;Click here for more details">
         <a href="#" class="element-link" data-id="actinides">
             <div class="element-number">89-103</div>
             <div class="element-symbol">Ac</div>
@@ -100,4 +100,5 @@
     </div>
 </div>
 <script src="{{ url_for('static', filename='js/temperature.js') }}"></script>
+<script src="{{url_for('static', filename='js/tooltips.js')}}"></script>
 {% endblock %}
