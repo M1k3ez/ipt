@@ -6,7 +6,7 @@
     <label for="temperature-slider">Temperature (K):</label>
     <input type="range" id="temperature-slider" name="temperature-slider" min="{{ config.MIN_TEMP }}" max="{{ config.MAX_TEMP }}" value="{{ config.NORM_TEMP }}">
     <span id="temperature-value">{{ config.NORM_TEMP }} K</span>
-    <button id="reset-temperature">Reset to STP</button>
+    <button id="reset-temperature">Reset to Standard temperature (STP)</button>
 </div>
 <div id="min-temp" style="display: none;">{{ config.MIN_TEMP }}</div>
 <div id="max-temp" style="display: none;">{{ config.MAX_TEMP }}</div>
