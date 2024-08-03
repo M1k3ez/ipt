@@ -250,12 +250,10 @@ html, body {
   transition: transform 0.2s ease-in-out;
   margin: 5px;
   text-decoration: none;
-  position: relative;
-  cursor: pointer;
 }
 .element a {
   text-decoration: none;
-  color: inherit;
+  color: inherit; 
 }
 .element a:hover {
   text-decoration: none;
@@ -263,7 +261,6 @@ html, body {
 .element:hover {
   transform: scale(1.05);
 }
-
 .element-number {
   font-size: 12px;
   font-weight: bold;
@@ -757,48 +754,39 @@ body {
 
 /* Tooltip styles */
 [tooltip] {
-  position: relative; /* opinion 1 */
+  position: relative;
+  cursor: pointer;
 }
 
 /* Applies to all tooltips */
 [tooltip]::before,
 [tooltip]::after {
-  text-transform: none; /* opinion 2 */
-  font-size: .9em; /* opinion 3 */
+  text-transform: none;
+  font-size: .9em;
   line-height: 1;
   user-select: none;
   pointer-events: none;
   position: absolute;
   display: none;
   opacity: 0;
+  white-space: nowrap;
+  z-index: 1001; /* Ensure tooltips are above other elements */
 }
 [tooltip]::before {
   content: '';
-  border: 5px solid transparent; /* opinion 4 */
-  z-index: 1001; /* absurdity 1 */
+  border: 5px solid transparent;
 }
 [tooltip]::after {
-  content: attr(tooltip); /* magic! */
-  
-  /* most of the rest of this is opinion */
+  content: attr(tooltip);
   font-family: Helvetica, sans-serif;
   text-align: center;
-  
-  /* 
-    Let the content set the size of the tooltips 
-    but this will also keep them from being obnoxious
-    */
   min-width: 3em;
   max-width: 21em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   padding: 1ch 1.5ch;
   border-radius: .3ch;
   box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
   background: #333;
   color: #fff;
-  z-index: 1000; /* absurdity 2 */
 }
 
 /* Make the tooltips respond to hover */
@@ -807,7 +795,7 @@ body {
   display: block;
 }
 
-/* don't show empty tooltips */
+/* Don't show empty tooltips */
 [tooltip='']::before,
 [tooltip='']::after {
   display: none !important;
@@ -907,3 +895,15 @@ body {
   animation: tooltips-horz 300ms ease-out forwards;
 }
 
+/* Position adjustments for lanthanides and actinides tooltips */
+.element.placeholder.lanthanides[tooltip]::before,
+.element.placeholder.lanthanides[tooltip]::after {
+  z-index: 1002; /* Ensure tooltips are above other elements */
+  transform: translateY(-50px); /* Adjust position to avoid overlap */
+}
+
+.element.placeholder.actinides[tooltip]::before,
+.element.placeholder.actinides[tooltip]::after {
+  z-index: 1002; /* Ensure tooltips are above other elements */
+  transform: translateY(-50px); /* Adjust position to avoid overlap */
+}
