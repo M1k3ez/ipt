@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, flash, redirect, url_for, request, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
 from config import Config
-from forms.forms import ContactForm
-from utils.utils import calculate_electron_configuration, store_electron_configuration, determine_state_at_zero
+from forms import ContactForm
+from functions import calculate_electron_configuration, determine_state_at_zero, store_electron_configuration
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -77,38 +77,43 @@ def get_element(electron):
         "categorydescription": category.description if category else None,
     })
 
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = ContactForm()
-    if form.validate_on_submit():
-        msg = Message(
-            subject=form.subject.data,
-            sender=app.config['MAIL_DEFAULT_SENDER'],
-            recipients=["ipttnoreply@gmail.com"]
-        )
-        msg.reply_to = form.email.data
-        msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
-        mail.send(msg)
-        flash('Your message has been sent successfully!', 'success')
-        return redirect(url_for('contact'))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            msg = Message(
+                subject=form.subject.data,
+                sender=app.config['MAIL_DEFAULT_SENDER'],
+                recipients=["ipttnoreply@gmail.com"]
+            )
+            msg.reply_to = form.email.data
+            msg.body = f"Name: {form.name.data}\nEmail: {form.email.data}\nPhone: {form.telephone.data}\nMessage: {form.message.data}"
+            mail.send(msg)
+            if request.is_json:
+                return jsonify({'message': 'Your message has been sent successfully!', 'category': 'success'})
+            flash('Your message has been sent successfully!', 'success')
+            return redirect(url_for('contact'))
+        else:
+            if request.is_json:
+                errors = [{'field': field, 'message': error} for field, errors in form.errors.items() for error in errors]
+                return jsonify({'errors': errors, 'category': 'danger'})
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"Error in {getattr(form, field).label.text}: {error}", 'danger')
     return render_template('contact.html', form=form, config=Config)
-
 
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html', config=Config)
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html', config=Config), 404
 
-
 @app.errorhandler(500)
 def internal_error(e):
     return render_template('404.html', config=Config), 500
-
 
 if __name__ == '__main__':
     with app.app_context():

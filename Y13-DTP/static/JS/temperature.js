@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function adjustElementNameFontSize() {
         const elementNames = document.querySelectorAll('.element-name');
         elementNames.forEach(function (element) {
-            const maxLength = 10; // Adjust this value based on your design needs
+            const maxLength = 9; // Adjust this value based on your design needs
             if (element.textContent.length > maxLength) {
                 element.classList.add('small-font'); // Add the small-font class
             }

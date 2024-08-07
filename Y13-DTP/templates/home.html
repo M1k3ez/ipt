@@ -6,7 +6,7 @@
     <label for="temperature-slider">Temperature (K):</label>
     <input type="range" id="temperature-slider" name="temperature-slider" min="{{ config.MIN_TEMP }}" max="{{ config.MAX_TEMP }}" value="{{ config.NORM_TEMP }}">
     <span id="temperature-value">{{ config.NORM_TEMP }} K</span>
-    <button id="reset-temperature">Reset to STP</button>
+    <button id="reset-temperature">Reset to Standard temperature (STP)</button>
 </div>
 <div id="min-temp" style="display: none;">{{ config.MIN_TEMP }}</div>
 <div id="max-temp" style="display: none;">{{ config.MAX_TEMP }}</div>
@@ -30,7 +30,7 @@
         {% endfor %}
     </div>
     <!-- Placeholder for Lanthanides -->
-    <div class="element placeholder lanthanides" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A">
+    <div class="element lplaceholder lanthanides tooltip" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A" tooltip="Lanthanoids (57-71)&#10;Click here for more details">
         <a href="#" class="element-link" data-id="lanthanides">
             <div class="element-number">57-71</div>
             <div class="element-symbol">La</div>
@@ -38,8 +38,8 @@
             <div class="element-weight"></div>
         </a>
     </div>
-    <!-- Placeholder for Actinides -->
-    <div class="element placeholder actinides" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides" data-melting="N/A" data-boiling="N/A">
+    
+    <div class="element aplaceholder actinides tooltip" style="grid-column: 4 / span 1; grid-row: 8;" data-id="actinides" data-melting="N/A" data-boiling="N/A" tooltip="Actinoids (89-103)&#10;Click here for more details">
         <a href="#" class="element-link" data-id="actinides">
             <div class="element-number">89-103</div>
             <div class="element-symbol">Ac</div>
@@ -47,20 +47,21 @@
             <div class="element-weight"></div>
         </a>
     </div>
+    
     <!-- Elements in the periodic table -->
     {% for element in elements %}
         {% set category_class = 'category-' ~ element.category_id %}
         {% if 57 <= element.electron <= 71 %}
             <!-- Lanthanides -->
-            <div class="element lanthanides {{ category_class }}" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element lanthanides {{ category_class }} tooltip" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% elif 89 <= element.electron <= 103 %}
             <!-- Actinides -->
-            <div class="element actinides {{ category_class }}" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element actinides {{ category_class }} tooltip" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% else %}
             <!-- Other elements -->
-            <div class="element {{ category_class }}" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}">
+            <div class="element {{ category_class }} tooltip" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
                 <div class="element-number">{{ element.electron }}</div>
@@ -99,4 +100,5 @@
     </div>
 </div>
 <script src="{{ url_for('static', filename='js/temperature.js') }}"></script>
+<script src="{{url_for('static', filename='js/tooltips.js')}}"></script>
 {% endblock %}
