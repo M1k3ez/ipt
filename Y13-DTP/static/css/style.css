@@ -253,6 +253,8 @@ html, body {
   transition: transform 0.2s ease-in-out;
   margin: 5px;
   text-decoration: none;
+  position: relative;
+  z-index: 1;
 }
 .element a {
   text-decoration: none;
@@ -290,8 +292,7 @@ html, body {
   color: #777;
 }
 .lanthanides {
-  grid-column: 4 / span 1;
-  z-index: 1003;  
+  grid-column: 4 / span 1; 
   grid-row: 10;
 }
 .actinides {
@@ -308,9 +309,6 @@ html, body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin: 2px;
   grid-column: 4 / span 1;
-}
-.lplaceholder, .aplaceholder {
-  z-index: 1003;
 }
 #container {
   border: solid 3px #fff;
@@ -390,7 +388,7 @@ textarea {
   background-color: rgba(188, 152, 237, 1);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 100000;
   transform-origin: right;
   animation: notify 4s ease-in-out;
   display: flex;
@@ -778,12 +776,13 @@ body {
   display: none;
   opacity: 0;
   white-space: nowrap;
-  z-index: 1001; /* Ensure tooltips are above other elements */
 }
+
 [tooltip]::before {
   content: '';
   border: 5px solid transparent;
 }
+
 [tooltip]::after {
   content: attr(tooltip);
   font-family: Helvetica, sans-serif;
@@ -801,6 +800,7 @@ body {
 [tooltip]:hover::before,
 [tooltip]:hover::after {
   display: block;
+  opacity: 1;
 }
 
 /* Don't show empty tooltips */
@@ -816,10 +816,12 @@ body {
   border-bottom-width: 0;
   border-top-color: #333;
 }
+
 [tooltip]:not([flow])::after,
 [tooltip][flow^="up"]::after {
   bottom: calc(100% + 5px);
 }
+
 [tooltip]:not([flow])::before,
 [tooltip]:not([flow])::after,
 [tooltip][flow^="up"]::before,
@@ -834,9 +836,11 @@ body {
   border-top-width: 0;
   border-bottom-color: #333;
 }
+
 [tooltip][flow^="down"]::after {
   top: calc(100% + 5px);
 }
+
 [tooltip][flow^="down"]::before,
 [tooltip][flow^="down"]::after {
   left: 50%;
@@ -851,6 +855,7 @@ body {
   left: calc(0em - 5px);
   transform: translate(-.5em, -50%);
 }
+
 [tooltip][flow^="left"]::after {
   top: 50%;
   right: calc(100% + 5px);
@@ -865,6 +870,7 @@ body {
   right: calc(0em - 5px);
   transform: translate(.5em, -50%);
 }
+
 [tooltip][flow^="right"]::after {
   top: 50%;
   left: calc(100% + 5px);
@@ -903,15 +909,29 @@ body {
   animation: tooltips-horz 300ms ease-out forwards;
 }
 
-/* Position adjustments for lanthanides and actinides tooltips */
-.element.placeholder.lanthanides[tooltip]::before,
-.element.placeholder.lanthanides[tooltip]::after {
-  z-index: 1002; /* Ensure tooltips are above other elements */
-  transform: translateY(-50px); /* Adjust position to avoid overlap */
+/* Tooltip left edge adjustments */
+.tooltip-left-edge[tooltip]::before,
+.tooltip-left-edge[tooltip]::after {
+  left: 10px;
+  transform: translateX(0);
 }
 
-.element.placeholder.actinides[tooltip]::before,
-.element.placeholder.actinides[tooltip]::after {
-  z-index: 1002; /* Ensure tooltips are above other elements */
-  transform: translateY(-50px); /* Adjust position to avoid overlap */
+/* Tooltip right edge adjustments */
+.tooltip-right-edge[tooltip]::before,
+.tooltip-right-edge[tooltip]::after {
+  right: 10px;
+  left: auto;
+  transform: translateX(0);
+}
+
+/* Make sure tooltips on hover are always on top of grid elements */
+[tooltip]:hover::before,
+[tooltip]:hover::after {
+  display: block;
+}
+
+/* General tooltip styling */
+.tooltip[tooltip] {
+  position: relative;
+  max-width: 200px; /* Limit tooltip width to avoid overflow */
 }
