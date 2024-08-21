@@ -847,36 +847,6 @@ body {
   transform: translate(-50%, .5em);
 }
 
-/* FLOW: LEFT */
-[tooltip][flow^="left"]::before {
-  top: 50%;
-  border-right-width: 0;
-  border-left-color: #333;
-  left: calc(0em - 5px);
-  transform: translate(-.5em, -50%);
-}
-
-[tooltip][flow^="left"]::after {
-  top: 50%;
-  right: calc(100% + 5px);
-  transform: translate(-.5em, -50%);
-}
-
-/* FLOW: RIGHT */
-[tooltip][flow^="right"]::before {
-  top: 50%;
-  border-left-width: 0;
-  border-right-color: #333;
-  right: calc(0em - 5px);
-  transform: translate(.5em, -50%);
-}
-
-[tooltip][flow^="right"]::after {
-  top: 50%;
-  left: calc(100% + 5px);
-  transform: translate(.5em, -50%);
-}
-
 /* KEYFRAMES */
 @keyframes tooltips-vert {
   to {
@@ -912,16 +882,13 @@ body {
 /* Tooltip left edge adjustments */
 .tooltip-left-edge[tooltip]::before,
 .tooltip-left-edge[tooltip]::after {
-  left: 10px;
-  transform: translateX(0);
+  left: 80px;
 }
 
 /* Tooltip right edge adjustments */
 .tooltip-right-edge[tooltip]::before,
 .tooltip-right-edge[tooltip]::after {
-  right: 10px;
-  left: auto;
-  transform: translateX(0);
+  left:-5px;
 }
 
 /* Make sure tooltips on hover are always on top of grid elements */
