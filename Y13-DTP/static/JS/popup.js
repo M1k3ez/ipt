@@ -36,6 +36,9 @@ $(document).ready(function() {
                     if (response.category) {
                         content += '<p>Category: ' + response.category + '</p>';
                     }
+                    if (response.details){
+                        content += '<p><a href="' + response.details + '" target="_blank">Click to view more details</a></p>';
+                    }
                     $('#popup-content').html(content); // Insert content into popup
                 }
                 $('.popup').addClass('active');

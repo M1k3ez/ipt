@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="temperature-control">
-    <!-- Instructions and controls for temperature slider -->
+    {# Instructions and controls for temperature slider #}
     <a>Drag and drop to modify temperature and element's state</a>
     <label for="temperature-slider">Temperature (K):</label>
     <input type="range" id="temperature-slider" name="temperature-slider" min="{{ config.MIN_TEMP }}" max="{{ config.MAX_TEMP }}" value="{{ config.NORM_TEMP }}">
@@ -11,25 +11,25 @@
 <div id="min-temp" style="display: none;">{{ config.MIN_TEMP }}</div>
 <div id="max-temp" style="display: none;">{{ config.MAX_TEMP }}</div>
 <div id="norm-temp" style="display: none;">{{ config.NORM_TEMP }}</div>
-<!-- Periodic table structure -->
+{# Periodic table structure #}
 <div class="periodic-table">
     <div class="corner-label">
         <div class="horizontal-label">Group</div>
         <div class="vertical-label">Period</div>
     </div>
-    <!-- Group labels -->
+    {# Group labels #}
     <div class="group-labels">
         {% for group in range(1, 19) %}
             <div class="group-label" style="grid-column: {{ group + 1 }}; grid-row: 1;">{{ group }}</div>
         {% endfor %}
     </div>
-    <!-- Period labels -->
+    {# Period labels #}
     <div class="period-labels">
         {% for period in range(1, 8) %}
             <div class="period-label" style="grid-column: 1; grid-row: {{ period + 1 }};">{{ period }}</div>
         {% endfor %}
     </div>
-    <!-- Placeholder for Lanthanides -->
+    {# Placeholder for Lanthanides #}
     <div class="element lplaceholder tooltip" style="grid-column: 4 / span 1; grid-row: 7;" data-id="lanthanides" data-melting="N/A" data-boiling="N/A" tooltip="Lanthanoids (57-71)&#10;See below for details">
         <a href="#" class="element-link" data-id="lanthanides">
             <div class="element-number">57-71</div>
@@ -48,19 +48,19 @@
         </a>
     </div>
     
-    <!-- Elements in the periodic table -->
+    {# Elements in the periodic table #}
     {% for element in elements %}
         {% set category_class = 'category-' ~ element.category_id %}
         {% if 57 <= element.electron <= 71 %}
-            <!-- Lanthanides -->
+            {# Lanthanides #}
             <div class="element lanthanides {{ category_class }} tooltip" style="grid-column: {{ element.electron - 54 }}; grid-row: 10;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% elif 89 <= element.electron <= 103 %}
-            <!-- Actinides -->
+            {# Actinides #}
             <div class="element actinides {{ category_class }} tooltip" style="grid-column: {{ element.electron - 86 }}; grid-row: 11;" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% else %}
-            <!-- Other elements -->
+            {# Other elements #}
             <div class="element {{ category_class }} tooltip" style="grid-column: {{ element.group + 1 }}; grid-row: {{ element.period + 1 }};" data-id="{{ element.electron }}" data-melting="{{ element.meltingpoint }}" data-boiling="{{ element.boilingpoint }}" tooltip="{{ element.name }} ({{ element.electron }})&#10;Click for more details">
                 <a href="#" class="element-link" data-id="{{ element.electron }}">
         {% endif %}
@@ -72,7 +72,7 @@
         </div>
     {% endfor %}
 </div>
-<!-- Legend for the periodic table -->
+{# Legend for the periodic table #}
 <div class="legend">
     <div class="legend-title">Key</div>
     <div class="legend-table">
@@ -92,7 +92,7 @@
         <div class="legend-cell unknown">Unknown</div>
     </div>
 </div>
-<!-- Popup container for element details -->
+{# Popup container for element details #}
 <div class="popup-container">
     <div id="popup" class="popup">
         <div class="close-btn">&times;</div>

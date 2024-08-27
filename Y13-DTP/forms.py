@@ -24,7 +24,7 @@ def validate_name(form, field):
 
 def validate_telephone(form, field):
     if not field.data.isdigit():
-        raise ValidationError("Phone number must contain only digits.")
+        raise ValidationError("Phone number must contain only numbers.")
     try:
         int(field.data)
     except ValueError:

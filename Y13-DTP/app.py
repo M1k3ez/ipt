@@ -1,4 +1,3 @@
-import os
 from flask import Flask, render_template, flash, redirect, url_for, request, jsonify
 from flask_mail import Mail, Message
 from models import db, ElementContent, Group, Period, Category
@@ -40,7 +39,7 @@ def home():
     ).join(Group, ElementContent.electron == Group.ecid
     ).join(Period, ElementContent.electron == Period.ecid
     ).join(Category, ElementContent.electron == Category.ecid).all()
-
+    # Process the queried data and add state information
     elements = [
         {
             "electron": element.electron,
@@ -62,8 +61,10 @@ def home():
 
 @app.route('/<int:electron>', methods=['GET'])
 def get_element(electron):
+    # Query the database for a specific element
     element = db.session.query(ElementContent).filter_by(electron=electron).first_or_404()
     category = db.session.query(Category).filter_by(ecid=electron).first_or_404()
+    # Calculate and store the electron configuration
     configuration, config_string = calculate_electron_configuration(electron)
     store_electron_configuration(element.electron, configuration)
     return jsonify({
@@ -89,6 +90,7 @@ def contact():
     form = ContactForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+            # Create and send an email with the form data
             msg = Message(
                 subject=form.subject.data,
                 sender=app.config['MAIL_DEFAULT_SENDER'],
@@ -102,6 +104,7 @@ def contact():
                 f"Message: {form.message.data}"
             )
             mail.send(msg)
+            # Handle both JSON and regular form submissions
             if request.is_json:
                 return jsonify({
                     'message': 'Your message has been sent successfully!',
@@ -110,6 +113,7 @@ def contact():
             flash('Your message has been sent successfully!', 'success')
             return redirect(url_for('contact'))
         else:
+            # Handle form validation errors
             if request.is_json:
                 errors = [
                     {'field': field, 'message': error}
@@ -119,7 +123,7 @@ def contact():
                 return jsonify({'errors': errors, 'category': 'danger'})
             for field, errors in form.errors.items():
                 for error in errors:
-                    flash(f"Error in {getattr(form, field).label.text}: {error}", 'danger')
+                    flash(f"{getattr(form, field).label.text}: {error}", 'danger')
     return render_template('contact.html', form=form, config=Config)
 
 

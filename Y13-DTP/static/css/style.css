@@ -1,4 +1,4 @@
-/* Periodic Table Styles */
+/* Periodic Table Styles CSS */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
 /* General Styles */
@@ -366,7 +366,7 @@ html, body {
   grid-column: 4 / span 1;
 }
 
-/* Form Styles */
+/* Contact Page Styles */
 #container {
   border: solid 3px #fff;
   padding-top: 18px;
@@ -492,7 +492,7 @@ textarea {
   background-color: rgb(255, 0, 0);
 }
 
-/* Error Page Styles */
+/* Error Page (404 Error) Styles */
 .error-container {
   display: flex;
   flex-direction: column;
@@ -546,7 +546,7 @@ textarea {
   text-decoration: none;
 }
 
-/* Legend Styles */
+/* Periodic Table Key Styles */
 .legend {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -677,7 +677,7 @@ textarea {
 }
 
 .small-font {
-  font-size: 10px;
+  font-size: 10.5px;
 }
 
 .corner-label {
@@ -704,7 +704,6 @@ textarea {
 }
 
 /* Animation Styles */
-
 @keyframes notify {
   0% { transform: scaleX(0); opacity: 0; }
   10% { transform: scaleX(1); opacity: 1; }
@@ -733,8 +732,7 @@ textarea {
   to { opacity: 1; }
 }
 
-/* Popup Styles */
-
+/* Elements Popup Styles */
 .popup-container * {
   margin: 0;
   padding: 0;
@@ -806,8 +804,7 @@ body {
   text-decoration: none;
 }
 
-/* Temperature Control Styles */
-
+/* Temperature Slider Styles */
 .temperature-control {
   margin: 20px;
   text-align: center;
@@ -861,7 +858,6 @@ body {
 }
 
 /* About Us Page Styles */
-
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
@@ -950,7 +946,6 @@ body {
 }
 
 /* Tooltip Styles */
-
 [tooltip] {
   position: relative;
   cursor: pointer;
@@ -999,7 +994,6 @@ body {
 }
 
 /* Tooltip Flow Styles */
-
 [tooltip]:not([flow])::before,
 [tooltip][flow^="up"]::before {
   bottom: 100%;
@@ -1037,7 +1031,6 @@ body {
 }
 
 /* Tooltip Animation */
-
 @keyframes tooltips-vert {
   to {
       opacity: .9;
@@ -1069,7 +1062,6 @@ body {
 }
 
 /* Tooltip Edge Adjustments */
-
 .tooltip-left-edge[tooltip]::before,
 .tooltip-left-edge[tooltip]::after {
   left: 80px;

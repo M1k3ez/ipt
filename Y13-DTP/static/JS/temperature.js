@@ -56,13 +56,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Check for long element names and adjust font size if necessary
+    function adjustElementNameFontSize() {
+        const elementNames = document.querySelectorAll('.element-name');
+        elementNames.forEach(function (element) {
+            const maxLength = 9;
+            if (element.textContent.length > maxLength) {
+                element.classList.add('small-font'); // Add the small-font class for long names
+            }
+        });
+    }
+
     // Prevent invalid values from being entered in the slider
     temperatureSlider.addEventListener('input', function() {
         const value = parseInt(this.value);
         if (validateTemperature(value)) {
             updateTemperature(value);
         } else {
-            this.value = lastValidTemperature; // Ignore the invalid value and stay at the last valid value
+            this.value = lastValidTemperature; // If out of bounds, reset to the last valid value
         }
     });
 
@@ -71,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (validateTemperature(value)) {
             updateTemperature(value);
         } else {
-            this.value = lastValidTemperature; // Ignore the invalid value and stay at the last valid value
+            this.value = lastValidTemperature; // If out of bounds, reset to the last valid value
         }
     });
 
@@ -82,4 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial validation and setting
     updateTemperature(temperatureSlider.value);
+
+    // Adjust font size of element names on page load
+    adjustElementNameFontSize();
 });
