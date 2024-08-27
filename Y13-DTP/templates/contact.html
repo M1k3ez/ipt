@@ -1,32 +1,54 @@
 {% extends "layout.html" %}
 {% block content %}
-<head>
-    <title>Interactive periodic table: Contact</title>
-</head>
 <div id="container">
-    <h1>&bull; contact &bull;</h1>
+    <h1>• contact •</h1>
     <div class="underline"></div>
-    <form id="contact_form" action="{{ url_for('contact') }}" method="post" class="contact_form">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('contact') }}" id="contact_form">
         {{ form.hidden_tag() }}
         <div class="name">
             {{ form.name.label(hidden=True) }}
-            {{ form.name(id='name_input', placeholder='My name is', pattern="[A-Za-z ]{1,24}", title="Name must be only letters and spaces.") }}
+            {{ form.name(id='name_input', placeholder='My name is') }}
+            {% for error in form.name.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
         </div>
         <div class="email">
             {{ form.email.label(hidden=True) }}
-            {{ form.email(id='email_input', placeholder='My e-mail is', maxlength="30", pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}", title="Email must be a valid email address and no longer than 30 characters.") }}
+            {{ form.email(id='email_input', placeholder='My e-mail is') }}
+            {% for error in form.email.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
         </div>
         <div class="telephone">
             {{ form.telephone.label(hidden=True) }}
-            {{ form.telephone(id='telephone_input', placeholder='My number is', maxlength="15", pattern="[0-9]{1,15}", title="Phone number must contain only numbers and be no longer than 15 digits.") }}
+            {{ form.telephone(id='telephone_input', placeholder='My number is') }}
+            {% for error in form.telephone.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
         </div>
         <div class="subject">
             {{ form.subject.label(hidden=True) }}
             {{ form.subject(id='subject_input') }}
+            {% for error in form.subject.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
         </div>
         <div class="message">
             {{ form.message.label(hidden=True) }}
-            {{ form.message(id='message_input', placeholder="I'd like to chat about", maxlength="600", title="Message must be less than 600 characters.") }}
+            {{ form.message(id='message_input', placeholder="I'd like to chat about") }}
+            {% for error in form.message.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="contact-text">
+            PLEASE NOTE: YOUR RESPONSES WILL NOT BE RECORDED OR STORED IN OUR DATABASE. HOWEVER, PLEASE NOTE THAT YOUR RESPONSE MAY BE USED TO IMPROVE OUR WEBSITE. WE ENSURE THAT NO PERSONALLY IDENTIFIABLE INFORMATION WILL BE COLLECTED, STORED, OR SHARED TO A THIRD-PARTY SIDE WITHOUT YOUR CONSENT.
         </div>
         <div class="submit">
             {{ form.submit(id='form_button') }}
