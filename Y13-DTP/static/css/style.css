@@ -207,6 +207,15 @@ html, body {
   margin-top: 2px;
   color: white;
 }
+
+.footer-reference li {
+  font-size: 12px;
+}
+.footer-reference ul li a{
+  text-decoration: none;
+  color: #fff;
+  font-size: 12px;
+}
 .periodic-table {
   display: grid;
   grid-template-columns: 30px repeat(18, minmax(1px, 1fr));

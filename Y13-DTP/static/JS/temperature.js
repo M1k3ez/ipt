@@ -9,25 +9,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const MAX_TEMPERATURE = parseInt(document.getElementById('max-temp').textContent);
     const NORM_TEMPERATURE = parseInt(document.getElementById('norm-temp').textContent);
 
-    // Use the 404 route URL from Flask
-    const notFoundRoute = '/404'; 
+    // Set min and max attributes for the slider
+    temperatureSlider.min = MIN_TEMPERATURE;
+    temperatureSlider.max = MAX_TEMPERATURE;
+
+    let lastValidTemperature = parseInt(temperatureSlider.value); // Store the last valid temperature value
 
     function validateTemperature(temperature) {
-        if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE) {
-            window.location.href = notFoundRoute;
-            return false;
-        }
-        return true;
+        return temperature >= MIN_TEMPERATURE && temperature <= MAX_TEMPERATURE;
     }
 
     function updateTemperature(value) {
         const temperature = parseInt(value);
         if (!validateTemperature(temperature)) {
-            temperatureSlider.value = NORM_TEMPERATURE; // Reset to a valid value to prevent further issues
+            // Ignore invalid value without reverting or updating the slider
             return;
         }
 
+        lastValidTemperature = temperature; // Update last valid temperature
         temperatureValue.textContent = `${temperature} K`;
+
         elements.forEach(element => {
             const meltingPoint = element.getAttribute('data-melting');
             const boilingPoint = element.getAttribute('data-boiling');
@@ -55,24 +56,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Check for long element names and adjust font size if necessary
-    function adjustElementNameFontSize() {
-        const elementNames = document.querySelectorAll('.element-name');
-        elementNames.forEach(function (element) {
-            const maxLength = 9; // Adjust this value based on your design needs
-            if (element.textContent.length > maxLength) {
-                element.classList.add('small-font'); // Add the small-font class
-            }
-        });
-    }
-
-    // Handle changes through user interaction and direct console manipulation
+    // Prevent invalid values from being entered in the slider
     temperatureSlider.addEventListener('input', function() {
-        updateTemperature(this.value);
+        const value = parseInt(this.value);
+        if (validateTemperature(value)) {
+            updateTemperature(value);
+        } else {
+            this.value = lastValidTemperature; // Ignore the invalid value and stay at the last valid value
+        }
     });
 
     temperatureSlider.addEventListener('change', function() {
-        updateTemperature(this.value);
+        const value = parseInt(this.value);
+        if (validateTemperature(value)) {
+            updateTemperature(value);
+        } else {
+            this.value = lastValidTemperature; // Ignore the invalid value and stay at the last valid value
+        }
     });
 
     resetButton.addEventListener('click', function() {
@@ -82,7 +82,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial validation and setting
     updateTemperature(temperatureSlider.value);
-
-    // Adjust font size of element names on page load
-    adjustElementNameFontSize();
 });
